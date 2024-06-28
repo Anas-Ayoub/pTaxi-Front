@@ -15,10 +15,11 @@ import 'package:taxi_app/screens/history_screen.dart';
 import 'package:taxi_app/screens/intro_language_screen.dart';
 import 'package:taxi_app/screens/main_screen.dart';
 import 'package:taxi_app/screens/passenger_additional_information.dart';
-import 'package:taxi_app/splashScreen/splash_screen.dart';
+import 'package:taxi_app/screens/profile_screen.dart';
+import 'package:taxi_app/screens/settings_screen.dart';
+import 'package:taxi_app/screens/splash_screen.dart';
 import 'package:taxi_app/screens/otp_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:taxi_app/widgets/test.dart';
 import 'firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -154,7 +155,7 @@ final GoRouter _router = GoRouter(
       name: RouteNames.profile,
       path: RouteNames.profile,
       pageBuilder: (context, state) {
-        return buildCustomTransitionPage(RideRequestsPage(), state);
+        return buildCustomTransitionPage(ProfileScreen(), state);
       },
       // builder: (BuildContext context, GoRouterState state) {
       //   return RideRequestsPage();
@@ -209,6 +210,13 @@ final GoRouter _router = GoRouter(
       name: RouteNames.history,
       builder: (BuildContext context, GoRouterState state) {
         return const HistoryScreen();
+      },
+    ),
+        GoRoute(
+      path: RouteNames.settings,
+      name: RouteNames.settings,
+      builder: (BuildContext context, GoRouterState state) {
+        return const SettingsScreen();
       },
     ),
   ],

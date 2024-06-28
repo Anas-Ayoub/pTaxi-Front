@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/widgets/phone_text_field%20copy.dart';
 import 'package:http/http.dart' as http;
+import 'package:taxi_app/widgets/profile_container.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,98 +19,101 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
 
+    if (user == null){
+      AuthService().signOutGoogle();
+    }
+
     return SafeArea(
       child: Scaffold(
+        
         appBar: AppBar(
           backgroundColor: Colors.transparent,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           child: Center(
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ProfilePicture(
-                  name: user!.displayName ?? 'NO NAM',
-                  radius: 40,
-                  fontsize: 30,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  user.displayName ?? 'NO NAM',
-                  style: GoogleFonts.aBeeZee(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                    ),
-                    Text('(4.7)')
-                  ],
-                ),
-                const Divider(),
-                const SizedBox(
-                  height: 20,
-                ),
-                MyTextField(
-                  hintText: 'First Name',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MyTextField(
-                  hintText: 'Last Name',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MyTextField(
-                  hintText: 'Phone Number',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MyTextField(
-                  hintText: 'Email',
-                ),
-                TextButton(
-                  onPressed: () async {
-                    final user = FirebaseAuth.instance.currentUser;
-                    if (user != null) {
-                      final idTokenResult = await user.getIdTokenResult(true);
-                      print(idTokenResult.token!);
-                      sendTokenToBackend(idTokenResult.token!);
-                    } else {
-                      return;
-                    }
-                  },
-                  child: Text("Fetch From Backend"),
-                ),
-                resp != null ? Text(resp!) : Text(""),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const ProfileFrame(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    user!.displayName ?? 'N/A',
+                    style: GoogleFonts.aBeeZee(fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      ),
+                      Text('(4.7)')
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  MyTextField(
+                    hintText: 'First Name',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  MyTextField(
+                    hintText: 'Last Name',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  MyTextField(
+                    hintText: 'Phone Number',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  MyTextField(
+                    hintText: 'Email',
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      final user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        final idTokenResult = await user.getIdTokenResult(true);
+                        print(idTokenResult.token!);
+                        sendTokenToBackend(idTokenResult.token!);
+                      } else {
+                        return;
+                      }
+                    },
+                    child: Text("Fetch From Backend"),
+                  ),
+                  resp != null ? Text(resp!) : Text(""),
+                ],
+              ),
             ),
           ),
         ),

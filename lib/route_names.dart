@@ -10,6 +10,7 @@ class RouteNames {
   static const helpScreen = '/helpScreen';
   static const helpForm = '/helpForm';
   static const history = '/history';
+  static const settings = '/settings';
 
   static List<String> noLoginScreens = [otp, introLanguage, passengerAdditionalInfo, helpScreen, helpForm]; 
 }

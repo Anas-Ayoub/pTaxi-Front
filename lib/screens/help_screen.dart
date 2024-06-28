@@ -12,9 +12,9 @@ class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: getBackgroundDecoration(),
+      // decoration: getBackgroundDecoration(),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(

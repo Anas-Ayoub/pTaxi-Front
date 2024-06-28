@@ -47,6 +47,7 @@ class FilledRoundedPinPutState extends State<FilledRoundedPinPut> {
     return SizedBox(
       height: 68,
       child: Pinput(
+        keyboardType: TextInputType.text,
         length: length,
         controller: controller,
         focusNode: focusNode,
