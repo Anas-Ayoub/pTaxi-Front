@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 // import 'package:mapbox_gl/mapbox_gl.dart';
 
 class MapProvider extends StatelessWidget {

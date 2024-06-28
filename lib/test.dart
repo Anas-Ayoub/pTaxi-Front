@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:linear_timer/linear_timer.dart';
-import 'package:pinput/pinput.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,7 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   Map<int, LinearTimerController>  controllers = {};
 
-  int _cardCounter = 0;
+  // int _cardCounter = 0;
   List<int> _cards = [];
 
   void addCard() {

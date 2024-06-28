@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:taxi_app/screens/profile_screen.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/route_names.dart';
 

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'user.dart';
 import 'ride.dart';
 import 'ride_request.dart';
 

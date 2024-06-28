@@ -45,6 +45,7 @@ class AuthService {
       return SignInResult(user: user, isNewUser: isNewUser);
     } catch (error) {
       log(error.toString());
+      return null;
     }
   }
 
@@ -59,7 +60,7 @@ class AuthService {
     }
   }
 
-  Future<User?> signInWithPhone(
+  Future<void> signInWithPhone(
       BuildContext context, String phoneNumber) async {
     final loadingProvider =
         Provider.of<LoadingProvider>(context, listen: false);
@@ -94,6 +95,7 @@ class AuthService {
             );
             loadingProvider.hide();
             throw Exception(error.message);
+            
           },
           codeSent: (verificationId, forceResendingToken) {
             print('COD SSNNNTTT');

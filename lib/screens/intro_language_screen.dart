@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/providers/language_provider.dart';
 import 'package:taxi_app/route_names.dart';
-import 'package:taxi_app/splashScreen/tsts.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/language_dropdownmenu.dart';
 import 'package:taxi_app/widgets/primary_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IntroLanguage extends StatefulWidget {
@@ -27,11 +24,7 @@ class _IntroLanguageState extends State<IntroLanguage> {
         Provider.of<LanguageProvider>(context, listen: true);
 
     return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(backgroundImage),
-              fit: BoxFit.cover,
-              alignment: Alignment.center)),
+      decoration: getBackgroundDecoration(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
@@ -76,7 +69,6 @@ class _IntroLanguageState extends State<IntroLanguage> {
                       context.go(RouteNames.passengerAdditionalInfo);
                     },
                   ),
-                  TextField(),
                 ],
               ),
             ),

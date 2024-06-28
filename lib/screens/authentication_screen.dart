@@ -1,8 +1,5 @@
-import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,13 +8,13 @@ import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/models/sign_in_result.dart';
 import 'package:taxi_app/providers/progress_dialog_provider.dart';
 import 'package:taxi_app/route_names.dart';
+import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/primary_button.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/widgets/phone_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:http/http.dart' as http;
 
 enum SnackBarType { success, failure, info }
 
@@ -49,14 +46,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(backgroundImage),
-                fit: BoxFit.cover,
-                alignment: Alignment.center)),
-        child: Padding(
+    return Container(
+      decoration: getBackgroundDecoration(),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 25),
           child: Form(
             key: _formKey,

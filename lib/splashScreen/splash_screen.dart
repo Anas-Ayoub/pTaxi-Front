@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/route_names.dart';
-import 'package:taxi_app/screens/authentication_screen.dart';
+import 'package:taxi_app/utils/utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -53,10 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(backgroundImage), fit: BoxFit.cover),
-        ),
+        decoration: getBackgroundDecoration(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

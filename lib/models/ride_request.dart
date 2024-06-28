@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'Passenger.dart';
 import 'location.dart';
 
 part 'ride_request.g.dart';

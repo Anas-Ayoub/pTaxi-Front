@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/constant/const.dart';

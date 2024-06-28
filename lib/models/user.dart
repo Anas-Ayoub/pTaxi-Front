@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'driver.dart';
 import 'passenger.dart';
 // import 'Feedback.dart';
 

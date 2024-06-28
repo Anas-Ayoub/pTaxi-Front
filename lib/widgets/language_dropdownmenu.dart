@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/main.dart';
 import 'package:taxi_app/providers/language_provider.dart';
-import 'package:taxi_app/enums/language_enum.dart';
+// import 'package:taxi_app/enums/language_enum.dart';
 import 'package:taxi_app/models/language.dart';
 import 'package:taxi_app/utils/utils.dart';
 
@@ -23,8 +23,8 @@ class _LanguageDropDownMenuState extends State<LanguageDropDownMenu> {
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
-    final langs = AppLanguage.values.map((e) => e.name).toList();
-    String dropdownValue = langs.first;
+    // final langs = AppLanguage.values.map((e) => e.name).toList();
+    // String dropdownValue = langs.first;
     return DropdownMenu(
       inputDecorationTheme: InputDecorationTheme(
         enabledBorder: OutlineInputBorder(

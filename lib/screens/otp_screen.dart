@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:taxi_app/constant/const.dart';
+import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/pinput.dart';
 import 'package:taxi_app/widgets/primary_button.dart';
 
@@ -16,12 +16,11 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(backgroundImage), fit: BoxFit.cover)),
-        child: Center(
+    return Container(
+      decoration: getBackgroundDecoration(),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
             child: SingleChildScrollView(

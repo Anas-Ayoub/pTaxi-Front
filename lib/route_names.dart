@@ -1,4 +1,3 @@
-import 'package:taxi_app/screens/help_screen.dart';
 
 class RouteNames {
   static const splash = '/';

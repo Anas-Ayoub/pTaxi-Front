@@ -12,7 +12,7 @@ TextStyle pinputFont = GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize
 
 
 //APP BACKGROUND IMAGE
-String backgroundImage = "assets/StarBackground.png";
+// String backgroundImage = "assets/StarBackground.png";
 
 //APP FONTS
 TextStyle kFontStyle = GoogleFonts.ubuntu(color: Colors.black);

@@ -1,6 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'Passenger.dart';
-import 'Driver.dart';
 import 'location.dart';
 // import 'Payment.dart';
 // import 'Feedback.dart';

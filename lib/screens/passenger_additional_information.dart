@@ -47,7 +47,7 @@ class PassengerAdditionalInfo extends StatelessWidget {
                         if (response.statusCode == 200) {
                           log("USER SAVED INTO DATABASE");
                           String url = "http://localhost:3000/driver";
-                          final resp = await http.post(
+                          await http.post(
                             Uri.parse(url),
                             headers: {
                               'Content-Type': 'application/json',

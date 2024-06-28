@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10,
                 ),
                 Text(
-                  user!.displayName ?? 'NO NAM',
+                  user.displayName ?? 'NO NAM',
                   style: GoogleFonts.aBeeZee(fontSize: 20),
                 ),
                 const SizedBox(

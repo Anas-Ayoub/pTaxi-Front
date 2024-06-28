@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'driver.dart';
 
 part 'vehicle.g.dart';
 

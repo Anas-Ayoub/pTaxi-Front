@@ -15,9 +15,6 @@ import 'package:taxi_app/screens/history_screen.dart';
 import 'package:taxi_app/screens/intro_language_screen.dart';
 import 'package:taxi_app/screens/main_screen.dart';
 import 'package:taxi_app/screens/passenger_additional_information.dart';
-import 'package:taxi_app/test.dart';
-import 'package:taxi_app/widgets/toggle_switcher_widget.dart';
-import 'package:taxi_app/screens/profile_screen.dart';
 import 'package:taxi_app/splashScreen/splash_screen.dart';
 import 'package:taxi_app/screens/otp_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -143,7 +140,7 @@ final GoRouter _router = GoRouter(
       name: RouteNames.splash,
       path: RouteNames.splash,
       builder: (BuildContext context, GoRouterState state) {
-        return IntroLanguage(); //OtpScreen(verificationId: '',); MySlashScreen();
+        return SplashScreen(); //OtpScreen(verificationId: '',); MySlashScreen();
       },
     ),
     GoRoute(
