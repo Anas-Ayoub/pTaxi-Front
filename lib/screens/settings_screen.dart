@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:taxi_app/constant/const.dart';
+import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/widgets/settings_button.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -15,11 +17,12 @@ class SettingsScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Column(
           children: [
             SettingsButton(
+              onTap: () => context.pushNamed(RouteNames.),
               title: "Change Language",
               trailingIcon: Icons.keyboard_arrow_right,
             ),

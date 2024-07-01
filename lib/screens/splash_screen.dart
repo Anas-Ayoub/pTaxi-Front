@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:taxi_app/providers/app_provider.dart';
-import 'package:taxi_app/route_names.dart';
+import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
 
 class SplashScreen extends StatefulWidget {

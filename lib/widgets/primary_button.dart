@@ -10,6 +10,7 @@ class PrimaryButton extends StatelessWidget {
   final double height;
   final bool? isBold;
   final Widget? icon;
+  final double? elevation;
 
   const PrimaryButton({
     Key? key,
@@ -20,7 +21,7 @@ class PrimaryButton extends StatelessWidget {
     this.height = 70,
     this.isBold = false,
     this.icon,
-    this.textColor = Colors.white,
+    this.textColor = Colors.white, this.elevation,
   }) : super(key: key);
 
   @override
@@ -30,6 +31,8 @@ class PrimaryButton extends StatelessWidget {
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          elevation: elevation,
+          
           foregroundColor: textColor,
           backgroundColor: color,
           padding: EdgeInsets.zero,

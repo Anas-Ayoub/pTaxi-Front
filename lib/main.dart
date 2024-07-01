@@ -4,11 +4,14 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taxi_app/Router/go_router.dart';
 import 'package:taxi_app/providers/language_provider.dart';
 import 'package:taxi_app/providers/app_provider.dart';
+import 'package:taxi_app/providers/map_provider.dart';
 import 'package:taxi_app/providers/progress_dialog_provider.dart';
-import 'package:taxi_app/route_names.dart';
+import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/screens/authentication_screen.dart';
+import 'package:taxi_app/screens/car_pick_screen.dart';
 import 'package:taxi_app/screens/help_form_screen.dart';
 import 'package:taxi_app/screens/help_screen.dart';
 import 'package:taxi_app/screens/history_screen.dart';
@@ -39,7 +42,7 @@ void main() async {
 
   FirebaseAuth.instance.userChanges().listen((User? user) {
     print('in ===> userChanges().listen');
-    _router.refresh();
+    router.refresh();
   });
 
   runApp(
@@ -48,6 +51,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
         ChangeNotifierProvider(create: (context) => AppProvider()),
         ChangeNotifierProvider(create: (context) => LoadingProvider()),
+        ChangeNotifierProvider(create: (context) => MapProvider()),
       ],
       child: const MyApp(),
     ),
@@ -96,7 +100,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      routerConfig: _router,
+      routerConfig: router,
       locale: _locale,
       title: 'app',
       theme: ThemeData(
@@ -108,133 +112,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-//ROUTES
-final GoRouter _router = GoRouter(
-  redirect: (BuildContext context, GoRouterState state) async {
-    final isFL = Provider.of<AppProvider>(context, listen: false).isFirstLunch;
-    print('isFirstLunch = $isFL');
-    print('in rdirct');
-    final bool loggedIn = FirebaseAuth.instance.currentUser != null;
-    loggedIn ? print('LOOOOOGGGGGG') : print('NOT LOOOOG');
-    print("Path = ${state.path}");
-    print("name = ${state.name}");
-    print("fullPath = ${state.fullPath}");
-    print("matchedLocation = ${state.matchedLocation}");
-    print("uri = ${state.uri}");
 
-    if (RouteNames.noLoginScreens.contains(state.fullPath)) {
-      return null;
-    }
-    if (state.fullPath == RouteNames.helpScreen) {
-      return null;
-    }
-    if (isFL) {
-      return RouteNames.splash;
-    }
-    if (!loggedIn) {
-      return RouteNames.authetication;
-    }
-    return null;
-  },
-  routes: [
-    GoRoute(
-      name: RouteNames.splash,
-      path: RouteNames.splash,
-      builder: (BuildContext context, GoRouterState state) {
-        return SplashScreen(); //OtpScreen(verificationId: '',); MySlashScreen();
-      },
-    ),
-    GoRoute(
-      name: RouteNames.main,
-      path: RouteNames.main,
-      builder: (BuildContext context, GoRouterState state) {
-        return const MainScreen();
-      },
-    ),
-    GoRoute(
-      name: RouteNames.profile,
-      path: RouteNames.profile,
-      pageBuilder: (context, state) {
-        return buildCustomTransitionPage(ProfileScreen(), state);
-      },
-      // builder: (BuildContext context, GoRouterState state) {
-      //   return RideRequestsPage();
-      // },
-    ),
-    GoRoute(
-      path: RouteNames.introLanguage,
-      name: RouteNames.introLanguage,
-      builder: (BuildContext context, GoRouterState state) {
-        return const IntroLanguage();
-      },
-    ),
-    GoRoute(
-      path: RouteNames.authetication,
-      name: RouteNames.authetication,
-      builder: (BuildContext context, GoRouterState state) {
-        return const AuthScreen();
-      },
-    ),
-    GoRoute(
-      path: RouteNames.passengerAdditionalInfo,
-      name: RouteNames.passengerAdditionalInfo,
-      builder: (BuildContext context, GoRouterState state) {
-        return const PassengerAdditionalInfo();
-      },
-    ),
-    GoRoute(
-      path: "${RouteNames.otp}/:verificationId",
-      name: RouteNames.otp,
-      builder: (BuildContext context, GoRouterState state) {
-        final verificationId = state.pathParameters['verificationId'];
-        // Handle potential null verificationId
-        return OtpScreen(verificationId: verificationId!);
-      },
-    ),
-    GoRoute(
-      path: RouteNames.helpScreen,
-      name: RouteNames.helpScreen,
-      builder: (BuildContext context, GoRouterState state) {
-        return const HelpScreen();
-      },
-    ),
-    GoRoute(
-      path: RouteNames.helpForm,
-      name: RouteNames.helpForm,
-      builder: (BuildContext context, GoRouterState state) {
-        return const HelpFormSceen();
-      },
-    ),
-    GoRoute(
-      path: RouteNames.history,
-      name: RouteNames.history,
-      builder: (BuildContext context, GoRouterState state) {
-        return const HistoryScreen();
-      },
-    ),
-        GoRoute(
-      path: RouteNames.settings,
-      name: RouteNames.settings,
-      builder: (BuildContext context, GoRouterState state) {
-        return const SettingsScreen();
-      },
-    ),
-  ],
-);
-
-CustomTransitionPage buildCustomTransitionPage(
-    Widget child, GoRouterState state) {
-  return CustomTransitionPage(
-    key: state.pageKey,
-    child: child,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(
-        opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-        child: child,
-      );
-    },
-  );
-}
 
 
 

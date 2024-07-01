@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taxi_app/constant/const.dart';
-import 'package:taxi_app/route_names.dart';
+import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/primary_button.dart';
 import 'package:url_launcher/url_launcher.dart';

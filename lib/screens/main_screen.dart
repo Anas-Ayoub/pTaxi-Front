@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/screens/home_screen.dart';
-import 'package:taxi_app/route_names.dart';
+import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/widgets/drawer_button.dart';
 import 'package:taxi_app/widgets/profile_container.dart';
@@ -59,13 +59,10 @@ class _MainScreenState extends State<MainScreen>
       drawer: Drawer(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 25,
-                ),
                 ProfileFrame(),
                 const SizedBox(
                   height: 10,
@@ -107,22 +104,34 @@ class _MainScreenState extends State<MainScreen>
                   text: "Log Out",
                   onPressed: () => AuthService().signOutGoogle(),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
               ],
             ),
           ),
         ),
       ),
       body: const HomeScreen(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: primaryColor,
-        onPressed: () {
-          _scaffoldKey.currentState?.openDrawer();
-        },
-        child: Icon(Icons.menu, color: Colors.red,),
-        
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: SizedBox(
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), // Set the border radius
+              ),
+              backgroundColor: primaryColor,
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+              child: const Icon(
+                Icons.menu,
+                color: Colors.white,
+                size: 25,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

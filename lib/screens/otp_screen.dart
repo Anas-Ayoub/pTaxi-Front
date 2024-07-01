@@ -19,7 +19,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return Container(
       decoration: getBackgroundDecoration(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
