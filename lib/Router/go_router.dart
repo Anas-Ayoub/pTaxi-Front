@@ -13,6 +13,7 @@ import 'package:taxi_app/screens/help_form_screen.dart';
 import 'package:taxi_app/screens/help_screen.dart';
 import 'package:taxi_app/screens/history_screen.dart';
 import 'package:taxi_app/screens/intro_language_screen.dart';
+import 'package:taxi_app/screens/languages_screen.dart';
 import 'package:taxi_app/screens/main_screen.dart';
 import 'package:taxi_app/screens/otp_screen.dart';
 import 'package:taxi_app/screens/passenger_additional_information.dart';
@@ -141,8 +142,8 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      path: RouteNames.policyPrivicy,
-      name: RouteNames.policyPrivicy,
+      path: RouteNames.privacyPolicy,
+      name: RouteNames.privacyPolicy,
       builder: (BuildContext context, GoRouterState state) {
         return const PrivacyPolicy();
       },
@@ -152,6 +153,13 @@ final GoRouter _router = GoRouter(
       name: RouteNames.aboutUs,
       builder: (BuildContext context, GoRouterState state) {
         return const AboutUs();
+      },
+    ),
+    GoRoute(
+      path: RouteNames.changeLanguage,
+      name: RouteNames.changeLanguage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const LanguageScreen();
       },
     ),
   ],

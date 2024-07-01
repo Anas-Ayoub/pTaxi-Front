@@ -8,6 +8,7 @@ import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/providers/map_provider.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/services/mapbox_service.dart';
+import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/phone_text_field.dart';
 import 'package:taxi_app/widgets/primary_button.dart';
 import 'package:taxi_app/widgets/primary_textfield.dart';
@@ -228,7 +229,64 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                       ),
                       PrimaryButton(
                         text: "Find Driver",
-                        onPressed: () {},
+                        onPressed: () {
+                          LatLng? source =
+                              context.read<MapProvider>().currentLocation;
+                          LatLng? destination =
+                              context.read<MapProvider>().toLocationLatLng;
+
+                          if (source != null && destination != null) {
+                            getOptimizedRoute(source, destination).then(
+                              (response) async {
+                                Map<String, dynamic> geo =
+                                    response['trips'][0]['geometry'];
+
+                                Object _fills = {
+                                  "type": "FeatureCollection",
+                                  "features": [
+                                    {
+                                      "type": "Feature",
+                                      "id": 0,
+                                      "properties": <String, dynamic>{},
+                                      "geometry": geo,
+                                    },
+                                  ],
+                                };
+
+                                await mapProvider.mapboxMapController!
+                                    .removeLayer("lines");
+                                await mapProvider.mapboxMapController!
+                                    .removeSource("fills");
+
+                                await mapProvider.mapboxMapController!
+                                    .addSource("fills",
+                                        GeojsonSourceProperties(data: _fills));
+                                await mapProvider.mapboxMapController!
+                                    .addLineLayer(
+                                  "fills",
+                                  "lines",
+                                  const LineLayerProperties(
+                                    lineColor: '#007AFF',
+                                    lineCap: "round",
+                                    lineJoin: "round",
+                                    lineWidth: 4,
+                                  ),
+                                );
+                                LatLngBounds bounds = LatLngBounds(
+                                  southwest: destination,
+                                  northeast: source,
+                                );
+
+                                CameraUpdate cameraUpdate =
+                                    CameraUpdate.newLatLngBounds(
+                                        bounds, top: 60, bottom: getScreenHeight(context) / 2 + 20, right: 60, left: 60);
+
+                                await mapProvider.mapboxMapController!
+                                    .animateCamera(cameraUpdate);
+                              },
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),

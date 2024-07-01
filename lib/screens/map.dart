@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:provider/provider.dart';
 import 'package:taxi_app/providers/map_provider.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 class Map extends StatefulWidget {
 
@@ -62,6 +63,7 @@ class _MapState extends State<Map> {
                     onMapCreated: (controller) {
                       _mapProvider.setMapController(controller);
                       cont = controller;
+                      
                     },
                     onMapClick: (point, coordinates) {
                       // log(cont!.cameraPosition!.target.toString());

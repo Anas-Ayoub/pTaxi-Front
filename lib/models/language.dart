@@ -22,7 +22,7 @@ class Language {
           1,
           Image.asset(
             "assets/frFlag.png",
-            width: 30,
+            // width: 30,
           ),
           "Français",
           "fr"),
@@ -30,7 +30,7 @@ class Language {
           2,
           Image.asset(
             "assets/enFlag.png",
-            width: 30,
+            // width: 30,
           ),
           "Anglais",
           "en"),
@@ -38,7 +38,7 @@ class Language {
           3,
           Image.asset(
             "assets/arFlag.png",
-            width: 30,
+            // width: 30,
           ),
           "العربية",
           "ar"),
@@ -46,7 +46,7 @@ class Language {
           4,
           Image.asset(
             "assets/esFlag.png",
-            width: 30,
+            // width: 30,
           ),
           "Spanish",
           "es"),

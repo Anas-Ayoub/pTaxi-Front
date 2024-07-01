@@ -1,4 +1,9 @@
 {
     "hello": "Bonjour",
-    "next": "Suivant"
+    "next": "Suivant",
+    "changeLanguage": "Changer de langue",
+    "english": "Anglais",
+    "french": "Français",
+    "spanish": "Espagnol",
+    "arabic": "Arabe"
 }

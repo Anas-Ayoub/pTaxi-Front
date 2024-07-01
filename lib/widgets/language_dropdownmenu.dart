@@ -56,7 +56,7 @@ class _LanguageDropDownMenuState extends State<LanguageDropDownMenu> {
             ),
             value: value.languageCode,
             label: value.name,
-            leadingIcon: value.flag);
+            leadingIcon: SizedBox(width: 30, child: value.flag,));
       }).toList(),
       leadingIcon: Padding(
         padding: const EdgeInsets.all(8.0),

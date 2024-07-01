@@ -15,7 +15,7 @@ class SettingsButton extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 7),
         decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.5),
+            color: primaryColor.withOpacity(0.2),
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: primaryColor, width: 1.5)),
         child: ListTile(

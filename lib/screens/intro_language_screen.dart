@@ -65,7 +65,7 @@ class _IntroLanguageState extends State<IntroLanguage> {
                     width: getScreenWidth(context) * 0.8,
                     text: AppLocalizations.of(context)!.next,
                     onPressed: () {
-                      saveLanguage(languageProvider.selectedLanguage);
+                      saveLanguage(context);
                       context.go(RouteNames.passengerAdditionalInfo);
                     },
                   ),
@@ -76,10 +76,5 @@ class _IntroLanguageState extends State<IntroLanguage> {
         ),
       ),
     );
-  }
-
-  saveLanguage(String code) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('selectedLanguage', code);
   }
 }

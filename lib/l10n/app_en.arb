@@ -1,4 +1,9 @@
 {
     "hello": "Hello",
-    "next": "Next"
+    "next": "Next",
+    "changeLanguage": "Change Language",
+    "english": "English",
+    "french": "French",
+    "spanish": "Spanish",
+    "arabic": "Arabic"
 }

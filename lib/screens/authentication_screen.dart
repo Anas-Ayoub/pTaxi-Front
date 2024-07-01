@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +12,7 @@ import 'package:taxi_app/widgets/primary_button.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/widgets/phone_text_field.dart';
 import 'package:flutter/gestures.dart';
+import 'package:taxi_app/widgets/top_snackbar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -82,7 +82,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         }
                       },
                     ),
-                
+
                     const SizedBox(
                       height: 40,
                     ),
@@ -91,19 +91,21 @@ class _AuthScreenState extends State<AuthScreen> {
                       textColor: Colors.white,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          final loadingProvider =
-                              Provider.of<LoadingProvider>(context, listen: false);
-                
+                          final loadingProvider = Provider.of<LoadingProvider>(
+                              context,
+                              listen: false);
+
                           String phoneNumber =
                               "+212${_phoneController.text.trim()}";
                           print(phoneNumber);
-                
+
                           loadingProvider.show(
                             context,
                             msg: "Signing in with Phone Number...",
                           );
-                
-                          await AuthService().signInWithPhone(context, phoneNumber);
+
+                          await AuthService()
+                              .signInWithPhone(context, phoneNumber);
                         }
                       },
                     ),
@@ -131,38 +133,27 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         isBold: true,
                         onPressed: () async {
-                          final loadingProvider =
-                              Provider.of<LoadingProvider>(context, listen: false);
+                          final loadingProvider = Provider.of<LoadingProvider>(
+                              context,
+                              listen: false);
                           loadingProvider.show(
                             context,
                             msg: "Signing in with Google...",
                           );
-                
+
                           SignInResult? res =
                               await AuthService().signInWithGoogle();
                           if (res != null) {
-                            showTopSnackBar(
-                              dismissType: DismissType.onSwipe,
-                              dismissDirection: [
-                                DismissDirection.up,
-                                DismissDirection.horizontal
-                              ],
-                              Overlay.of(context),
-                              displayDuration: const Duration(milliseconds: 3000),
-                              reverseAnimationDuration:
-                                  const Duration(milliseconds: 500),
-                              animationDuration: const Duration(milliseconds: 500),
-                              const CustomSnackBar.success(
-                                backgroundColor: Color.fromARGB(255, 37, 145, 40),
-                                message: "Successfully Signed In",
-                              ),
-                            );
+                            mySnackBar(
+                                context: context,
+                                message: "Successfully Signed In");
                             loadingProvider.hide();
                             // await Future.delayed(
                             //   const Duration(milliseconds: 1200),
                             // );
                             if (res.isNewUser) {
-                              context.goNamed(RouteNames.passengerAdditionalInfo);
+                              context
+                                  .goNamed(RouteNames.passengerAdditionalInfo);
                             } else {
                               //CHECK IF COMPLETED INFOS
                               context.goNamed(RouteNames.main);
@@ -176,10 +167,12 @@ class _AuthScreenState extends State<AuthScreen> {
                                 DismissDirection.horizontal
                               ],
                               Overlay.of(context),
-                              displayDuration: const Duration(milliseconds: 3000),
+                              displayDuration:
+                                  const Duration(milliseconds: 3000),
                               reverseAnimationDuration:
                                   const Duration(milliseconds: 500),
-                              animationDuration: const Duration(milliseconds: 500),
+                              animationDuration:
+                                  const Duration(milliseconds: 500),
                               const CustomSnackBar.error(
                                 message: "Authentication not procceded",
                               ),
@@ -198,12 +191,14 @@ class _AuthScreenState extends State<AuthScreen> {
                         style: kFontStyle.copyWith(fontSize: 12),
                         children: [
                           const TextSpan(
-                              text: "Joining our app means you agree with our "),
+                              text:
+                                  "Joining our app means you agree with our "),
                           TextSpan(
                             text: "Terms of Use",
                             style: const TextStyle(
                                 decoration: TextDecoration.underline),
-                            recognizer: TapGestureRecognizer()..onTap = () => {},
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => {},
                           ),
                           const TextSpan(text: " and "),
                           TextSpan(
@@ -214,7 +209,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               ..onTap = () async {
                                 // const backendUrl =
                                 //     'http://192.168.100.149:3000/users';
-                
+
                                 // final response = await http.get(
                                 //   Uri.parse(backendUrl),
                                 //   headers: {},
@@ -242,11 +237,12 @@ class _AuthScreenState extends State<AuthScreen> {
                         TextSpan(
                           text: "Help",
                           style: getFontStyle(context).copyWith(
-                            fontSize: 17,
+                              fontSize: 17,
                               color: Color.fromARGB(255, 0, 135, 153),
                               decoration: TextDecoration.underline),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => context.pushNamed(RouteNames.helpScreen),
+                            ..onTap =
+                                () => context.pushNamed(RouteNames.helpScreen),
                         ),
                       ]),
                     ),

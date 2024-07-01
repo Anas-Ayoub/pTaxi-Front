@@ -1,4 +1,9 @@
 {
     "hello": "Hola",
-    "next": "Próximo"
+    "next": "Siguiente",
+    "changeLanguage": "Cambiar idioma",
+    "english": "Inglés",
+    "french": "Francés",
+    "spanish": "Español",
+    "arabic": "Árabe"
 }

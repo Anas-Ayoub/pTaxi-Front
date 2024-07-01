@@ -12,8 +12,9 @@ class RouteNames {
   static const history = '/history';
   static const settings = '/settings';
   static const termsCondition = '/termsCondition';
-  static const policyPrivicy = '/policyPrivicy';
+  static const privacyPolicy = '/privacyPolicy';
   static const aboutUs = '/aboutUs';
+  static const changeLanguage = '/changeLanguage';
 
   static List<String> noLoginScreens = [otp, introLanguage, passengerAdditionalInfo, helpScreen, helpForm]; 
 }
