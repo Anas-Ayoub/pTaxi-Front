@@ -84,11 +84,6 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                       }
                     }
                   },
-                  // onDoubleTap: () {
-                  //   _bottomSheetController.animateTo(_maxHeight,
-                  //       duration: const Duration(milliseconds: 450),
-                  //       curve: Curves.easeInOutCubic);
-                  // },
                   child: Container(
                     // color: Color.fromARGB(12, 0, 0, 0),
                     child: SizedBox(
@@ -273,16 +268,47 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                                   ),
                                 );
                                 LatLngBounds bounds = LatLngBounds(
-                                  southwest: destination,
-                                  northeast: source,
+                                  southwest: LatLng(
+                                    source.latitude < destination.latitude
+                                        ? source.latitude
+                                        : destination.latitude,
+                                    source.longitude < destination.longitude
+                                        ? source.longitude
+                                        : destination.longitude,
+                                  ),
+                                  northeast: LatLng(
+                                    source.latitude > destination.latitude
+                                        ? source.latitude
+                                        : destination.latitude,
+                                    source.longitude > destination.longitude
+                                        ? source.longitude
+                                        : destination.longitude,
+                                  ),
                                 );
-
                                 CameraUpdate cameraUpdate =
-                                    CameraUpdate.newLatLngBounds(
-                                        bounds, top: 60, bottom: getScreenHeight(context) / 2 + 20, right: 60, left: 60);
-
+                                    CameraUpdate.newLatLngBounds(bounds,
+                                        top: 100,
+                                        bottom: getScreenHeight(context) * 0.5,
+                                        right: 100,
+                                        left: 100);
+                                log("sdfafsfd");
                                 await mapProvider.mapboxMapController!
-                                    .animateCamera(cameraUpdate);
+                                    .animateCamera(cameraUpdate)
+                                    .then(
+                                  (value) {
+                                    log("Animated");
+                                    mapProvider.mapboxMapController!
+                                        .getVisibleRegion()
+                                        .then(
+                                      (value) {
+                                        mapProvider.mapboxMapController!
+                                            .animateCamera(
+                                                CameraUpdate.newLatLngBounds(
+                                                    value));
+                                      },
+                                    );
+                                  },
+                                );
                               },
                             );
                           }
@@ -299,20 +325,4 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
       //onStateChanged: (val) => setState(() => _currentHeight = val * widget.maxHeight),
     );
   }
-
-  // void hideSheet() {
-  //   _bottomSheetController.animateTo(
-  //     _bottomSheetController.,
-  //     duration: const Duration(milliseconds: 200),
-  //     curve: Curves.easeInOut,
-  //   );
-  // }
-
-  // void showSheet() {
-  //   _bottomSheetController.animateTo(
-  //     _maxHeight,
-  //     duration: const Duration(milliseconds: 200),
-  //     curve: Curves.easeInOut,
-  //   );
-  // }
 }

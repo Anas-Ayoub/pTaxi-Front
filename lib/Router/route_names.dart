@@ -15,8 +15,9 @@ class RouteNames {
   static const privacyPolicy = '/privacyPolicy';
   static const aboutUs = '/aboutUs';
   static const changeLanguage = '/changeLanguage';
+  static const cityPick = '/cityPick';
 
-  static List<String> noLoginScreens = [otp, introLanguage, passengerAdditionalInfo, helpScreen, helpForm]; 
+  static List<String> noLoginScreens = [otp, introLanguage, passengerAdditionalInfo, helpScreen, helpForm, splash]; 
 }
 
 

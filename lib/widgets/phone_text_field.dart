@@ -66,7 +66,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
             const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         hintText: widget.hintText,
         prefixIcon: Container(
-          padding: const EdgeInsets.only(left: 10, right: 0, top: 3),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 3),
           constraints: const BoxConstraints(
             minWidth: 0.0,
             maxWidth: double.infinity,

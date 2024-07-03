@@ -9,6 +9,7 @@ import 'package:taxi_app/Router/route_names.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:taxi_app/screens/about_us.dart';
 import 'package:taxi_app/screens/authentication_screen.dart';
+import 'package:taxi_app/screens/city_pick_screen.dart';
 import 'package:taxi_app/screens/help_form_screen.dart';
 import 'package:taxi_app/screens/help_screen.dart';
 import 'package:taxi_app/screens/history_screen.dart';
@@ -25,11 +26,10 @@ import 'package:taxi_app/screens/terms_condition.dart';
 
 final GoRouter _router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
-    final isFL = Provider.of<AppProvider>(context, listen: false).isFirstLunch;
     final bool loggedIn = FirebaseAuth.instance.currentUser != null;
 
     print('ROUTER ==> In Redirect');
-    print('ROUTER ==> Is FirstLunch = $isFL');
+    // print('ROUTER ==> Is FirstLunch = $isFL');
     print("ROUTER ==> Is LoggedIn = $loggedIn");
     print("ROUTER ==> Path = ${state.path}");
     print("ROUTER ==> Name = ${state.name}");
@@ -39,12 +39,6 @@ final GoRouter _router = GoRouter(
 
     if (RouteNames.noLoginScreens.contains(state.fullPath)) {
       return null;
-    }
-    if (state.fullPath == RouteNames.helpScreen) {
-      return null;
-    }
-    if (isFL) {
-      return RouteNames.splash;
     }
     if (!loggedIn) {
       return RouteNames.authetication;
@@ -160,6 +154,13 @@ final GoRouter _router = GoRouter(
       name: RouteNames.changeLanguage,
       builder: (BuildContext context, GoRouterState state) {
         return const LanguageScreen();
+      },
+    ),
+    GoRoute(
+      path: RouteNames.cityPick,
+      name: RouteNames.cityPick,
+      builder: (BuildContext context, GoRouterState state) {
+        return const CityPickScreen();
       },
     ),
   ],

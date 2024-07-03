@@ -8,11 +8,16 @@ class PrimaryTextfield extends StatelessWidget {
   final int? maxLines;
   final bool? isMultiLine;
   final String? hintText;
-  const PrimaryTextfield({super.key, required this.controller, this.keyboardType, this.validator, this.hintText, this.isMultiLine, this.maxLines});
+  final bool? isEnabled;
+  const PrimaryTextfield({super.key, required this.controller, this.keyboardType, this.validator, this.hintText, this.isMultiLine, this.maxLines, this.isEnabled});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType
+      ,
+      enabled: isEnabled,
+      controller: controller,
       style: getFontStyle(context),
       validator: validator,
       maxLines: isMultiLine != null ? isMultiLine! ? null : 1 : 1,

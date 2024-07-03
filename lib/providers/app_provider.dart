@@ -38,10 +38,10 @@ class AppProvider extends ChangeNotifier {
   //IS FIRST LAUNCH
   bool _isFirstLunch = true;
   bool get isFirstLunch => _isFirstLunch;
-  void setFirstLunch(bool val) async {
+  void setFirstLaunch(bool val) async {
     _isFirstLunch = val;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstLunch', val);
+    await prefs.setBool('isFirstLaunch', val);
     notifyListeners();
   }
 }

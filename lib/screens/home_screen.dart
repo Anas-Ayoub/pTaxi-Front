@@ -7,6 +7,7 @@ import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/providers/map_provider.dart';
 import 'package:taxi_app/providers/progress_dialog_provider.dart';
+import 'package:taxi_app/screens/BottomContent.dart';
 import 'package:taxi_app/screens/map.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/bottom_sheet.dart';
@@ -35,21 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.grey,
       body: Stack(
         children: [
-          // TextButton(
-          //   onPressed: () {
-          //     setState(
-          //       () {
-          //         sheetContent = DraggableBottomSheet(
-          //           maxHeight: 0.5,
-          //         );
-          //       },
-          //     );
-          //   },
-          //   child: Center(
-          //     child: Text("child"),
-          //   ),
-          // ),
-          Map(),
+          const Map(),
+          FilledButton(
+              onPressed: () {
+                showFindDriverSheet(context);
+              },
+              child: Text("gfdgdfgdgdfg")),
           Visibility(
             visible: _mapProvider.isPickingLocation,
             child: Center(
@@ -73,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: PrimaryButton(
                       elevation: 20,
                       text: "Cancel",
-                      onPressed: () {},
+                      onPressed: () {
+                        showFindDriverSheet(context);
+                        _mapProvider.setPickingLocation(false);
+                      },
                       color: errorColor,
                     ),
                   ),
@@ -86,17 +81,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       elevation: 20,
                       text: "Confirme",
                       onPressed: () {
-
-                        LatLng node = _mapProvider
-                            .mapboxMapController!.cameraPosition!.target;
+                        showFindDriverSheet(context);
+                        LatLng node = context
+                            .read<MapProvider>()
+                            .mapboxMapController!
+                            .cameraPosition!
+                            .target;
                         log('Picked location: $node');
-                        _appProvider.showSheet();
-                        
-                        _mapProvider.setPickingLocation(false);
-                        
-                        _mapProvider.setToLocation(LatLng(node.latitude, node.longitude));
+                        // _appProvider.showSheet();
 
-                        
+                        _mapProvider.setPickingLocation(false);
+
+                        _mapProvider.setToLocation(
+                            LatLng(node.latitude, node.longitude));
+
+                        _mapProvider.mapboxMapController!.addSymbol(
+                          SymbolOptions(
+                            geometry: LatLng(
+                              node.latitude,
+                              node.longitude,
+                            ),
+                            iconImage: "assets/question.png",
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -104,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          const DraggableBottomSheet(),
+          // const DraggableBottomSheet(),
         ],
       ),
     );

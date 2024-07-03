@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +20,28 @@ class IntroLanguage extends StatefulWidget {
 }
 
 class _IntroLanguageState extends State<IntroLanguage> {
+    Future<void> showSP() async {
+    final prefs = await SharedPreferences.getInstance();
+    final allKeys = prefs.getKeys();
+    print(allKeys.length);
+
+    for (final key in allKeys) {
+      final value = prefs.get(key);
+      print('Key: $key, Value: $value');
+    }
+  }
+  Future<void> loadSP() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isFirstLaunch", false);
+  }
+  @override
+  void initState() {
+    log("In Intro Lang");
+    super.initState();
+    loadSP().then((value) => showSP(),);
+  }
   @override
   Widget build(BuildContext context) {
-    final languageProvider =
-        Provider.of<LanguageProvider>(context, listen: true);
-
     return Container(
       decoration: getBackgroundDecoration(),
       child: Scaffold(
@@ -66,7 +85,7 @@ class _IntroLanguageState extends State<IntroLanguage> {
                     text: AppLocalizations.of(context)!.next,
                     onPressed: () {
                       saveLanguage(context);
-                      context.go(RouteNames.passengerAdditionalInfo);
+                      context.go(RouteNames.authetication);
                     },
                   ),
                 ],

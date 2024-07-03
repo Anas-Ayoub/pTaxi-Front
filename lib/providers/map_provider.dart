@@ -8,10 +8,21 @@ import 'package:taxi_app/services/mapbox_service.dart';
 class MapProvider extends ChangeNotifier {
   MapboxMapController? _mapboxMapController;
   MapboxMapController? get mapboxMapController => _mapboxMapController;
+  MapboxMapController? getMapboxMapController(){
+    return _mapboxMapController;
+  }
+
   void setMapController(MapboxMapController con) {
     _mapboxMapController = con;
     notifyListeners();
   }
+
+  //   MapboxMapController? _mapboxMapController2;
+  // MapboxMapController? get mapboxMapController2 => _mapboxMapController2;
+  // void setMapController2(MapboxMapController con) {
+  //   _mapboxMapController2 = con;
+  //   notifyListeners();
+  // }
 
   bool _isPickingLocation = false;
   bool get isPickingLocation => _isPickingLocation;

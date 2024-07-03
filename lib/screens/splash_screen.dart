@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:taxi_app/main.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
@@ -15,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future<void> printAllSharedPrefs() async {
+  Future<bool?> checkFirstLaunch() async {
     final prefs = await SharedPreferences.getInstance();
     final allKeys = prefs.getKeys();
     print(allKeys.length);
@@ -24,12 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
       final value = prefs.get(key);
       print('Key: $key, Value: $value');
     }
+    return prefs.getBool("isFirstLaunch") ?? true;
   }
 
   @override
   void initState() {
+    log("In Splash");
     super.initState();
-    Provider.of<AppProvider>(context, listen: false).setFirstLunch(false);
+    bool? isFirstLaunch;
+    checkFirstLaunch().then((value) => isFirstLaunch = value,);
     Future.delayed(
       const Duration(seconds: 2),
       () {
@@ -39,9 +45,14 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
           print('LOGGD OUT ');
         }
-
-        final route = loggedIn ? RouteNames.main : RouteNames.authetication;
-        context.go(route);
+        if (loggedIn) {
+          context.goNamed(RouteNames.main);
+        } else if (isFirstLaunch == true) {
+          context.goNamed(RouteNames.introLanguage);
+        } else {
+          context.goNamed(RouteNames.authetication);
+        }
+        // context.goNamed(RouteNames.introLanguage);
       },
     );
     //printAllSharedPrefs();
