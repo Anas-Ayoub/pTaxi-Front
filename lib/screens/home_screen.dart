@@ -32,24 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final _mapProvider = Provider.of<MapProvider>(context, listen: true);
     final _appProvider = Provider.of<AppProvider>(context, listen: false);
+    bool _isDraging = _mapProvider.isDraging;
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Stack(
         children: [
           const Map(),
-          FilledButton(
-              onPressed: () {
-                showFindDriverSheet(context);
-              },
-              child: Text("gfdgdfgdgdfg")),
           Visibility(
             visible: _mapProvider.isPickingLocation,
-            child: Center(
-              child: Icon(
-                Icons.location_on,
-                size: 50,
-                color: Colors.red,
-              ),
+            child: _isDraging ? Center(
+              child: Image.asset("assets/pinUp.png", width: 100,),
+            ) : Center(
+              child: Image.asset("assets/pinDown.png", width: 100,),
             ),
           ),
           Visibility(

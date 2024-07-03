@@ -6,6 +6,14 @@ import 'package:taxi_app/providers/progress_dialog_provider.dart';
 import 'package:taxi_app/services/mapbox_service.dart';
 
 class MapProvider extends ChangeNotifier {
+  bool _isDraging = false;
+    bool get isDraging => _isDraging;
+
+  void setIsDraging(bool val) {
+    _isDraging = val;
+    notifyListeners();
+  }
+
   MapboxMapController? _mapboxMapController;
   MapboxMapController? get mapboxMapController => _mapboxMapController;
   MapboxMapController? getMapboxMapController(){

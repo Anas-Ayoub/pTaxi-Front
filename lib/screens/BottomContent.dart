@@ -126,6 +126,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                             iconSize: 40,
                             onPressed: () {
                               if (nbPassenges > 1) {
+                                showOtherSheet(context);
                                 setState(() {
                                   nbPassenges = nbPassenges - 1;
                                 });

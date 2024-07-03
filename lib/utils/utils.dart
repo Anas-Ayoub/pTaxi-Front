@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,5 +36,14 @@ void showFindDriverSheet(BuildContext context) {
     enableDrag: false,
     context: context,
     builder: (context) => BottomSheetContent(),
+  );
+}
+
+void showOtherSheet(BuildContext context) {
+  log("In Other");
+  showBottomSheet(
+    enableDrag: false,
+    context: context,
+    builder: (context) => Padding(padding: EdgeInsets.all(12), child: Container(height: 100, color: Colors.indigo,),),
   );
 }

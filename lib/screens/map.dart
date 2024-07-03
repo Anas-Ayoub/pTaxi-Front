@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/providers/map_provider.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:taxi_app/utils/utils.dart';
 
 class Map extends StatefulWidget {
   const Map({
@@ -25,6 +26,7 @@ class _MapState extends State<Map> {
   @override
   void initState() {
     super.initState();
+    
     _acquireCurrentPosition().then(
       (value) {
         context.read<MapProvider>().setCurrentLocation(value);
@@ -72,19 +74,12 @@ class _MapState extends State<Map> {
                   _mapProvider.setMapController(controller);
                   cont = controller;
                   cont2 = controller;
-                  Future.delayed(Duration(seconds: 7)).then(
-                    (value) {},
-                  );
+                  showFindDriverSheet(context);
 
-                  cont!.addSymbol(
-                    SymbolOptions(
-                      geometry: LatLng(
-                        cont!.cameraPosition!.target.latitude,
-                        cont!.cameraPosition!.target.longitude,
-                      ),
-                      iconImage: "assets/question.png",
-                    ),
-                  );
+                  cont!.addListener(() {
+                    _mapProvider.setIsDraging(cont!.isCameraMoving);
+                  },);
+
                 },
 
                 onCameraTrackingChanged: (mode) {

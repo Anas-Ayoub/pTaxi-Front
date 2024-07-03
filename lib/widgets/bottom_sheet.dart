@@ -201,6 +201,7 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                               iconSize: 40,
                               onPressed: () {
                                 if (nbPassenges < 4) {
+                                  
                                   setState(() {
                                     nbPassenges = nbPassenges + 1;
                                   });
