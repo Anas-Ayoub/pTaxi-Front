@@ -7,7 +7,7 @@ import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/providers/map_provider.dart';
 import 'package:taxi_app/providers/progress_dialog_provider.dart';
-import 'package:taxi_app/screens/BottomContent.dart';
+import 'package:taxi_app/widgets/pickLocation_sheetContent.dart';
 import 'package:taxi_app/screens/map.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/bottom_sheet.dart';
@@ -38,6 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           const Map(),
+          // Visibility(
+          //   visible: true,
+          //   child: SearchAnchor(builder: (context, controller) {
+            
+          // }, suggestionsBuilder: (context, controller) {
+            
+          // },)),
           Visibility(
             visible: _mapProvider.isPickingLocation,
             child: _isDraging ? Center(
@@ -66,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: errorColor,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Expanded(
@@ -95,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               node.latitude,
                               node.longitude,
                             ),
-                            iconImage: "assets/question.png",
+                            iconImage: "assets/pinDown.png",
+                            iconSize: 1.5,
                           ),
                         );
                       },

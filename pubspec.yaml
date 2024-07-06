@@ -57,6 +57,8 @@ dependencies:
   flutter_typeahead: ^5.2.0
   flutter_keyboard_visibility: ^6.0.0
   flutter_map: ^7.0.1
+  timelines: ^0.1.0
+  timeline_tile: ^2.0.0
   # mapbox_maps_flutter: ^2.0.0
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +9,7 @@ import 'package:taxi_app/services/mapbox_service.dart';
 
 class MapProvider extends ChangeNotifier {
   bool _isDraging = false;
-    bool get isDraging => _isDraging;
+  bool get isDraging => _isDraging;
 
   void setIsDraging(bool val) {
     _isDraging = val;
@@ -16,7 +18,7 @@ class MapProvider extends ChangeNotifier {
 
   MapboxMapController? _mapboxMapController;
   MapboxMapController? get mapboxMapController => _mapboxMapController;
-  MapboxMapController? getMapboxMapController(){
+  MapboxMapController? getMapboxMapController() {
     return _mapboxMapController;
   }
 
@@ -47,7 +49,6 @@ class MapProvider extends ChangeNotifier {
 
   // void setLocationName(String name) {}
   void setToLocation(LatLng val) {
-    
     _toLocationLatLng = val;
     getPlaceName(val).then((value) {
       _toLocationName = value;
@@ -71,5 +72,23 @@ class MapProvider extends ChangeNotifier {
       notifyListeners();
     });
     // notifyListeners();
+  }
+
+  int _nbPassenger = 1;
+  int get nbPassenger => _nbPassenger;
+  static const maxPassenger = 4;
+
+  void increaseNbPassenger() {
+    if (_nbPassenger < maxPassenger) {
+      _nbPassenger = _nbPassenger + 1;
+      notifyListeners();
+    }
+  }
+
+  void decreaseNbPassenger() {
+    if (_nbPassenger > 1) {
+      _nbPassenger = _nbPassenger - 1;
+      notifyListeners();
+    }
   }
 }
