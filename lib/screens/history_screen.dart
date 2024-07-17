@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/widgets/toggle_switcher_widget.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
@@ -23,7 +23,7 @@ class _HistoryScreenState extends State<HistoryScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true, title: Text("Ride history"),),
+        centerTitle: true, title: Text(AppLocalizations.of(context)!.rideHistory),),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
@@ -49,9 +49,9 @@ class _HistoryScreenState extends State<HistoryScreen>
                       ),
                       labelColor: Colors.white,
                       unselectedLabelColor: const Color.fromARGB(255, 0, 0, 0),
-                      tabs: const [
-                        TabItem(title: 'Completed'),
-                        TabItem(title: 'Cancelled'),
+                      tabs: [
+                        TabItem(title: AppLocalizations.of(context)!.completed),
+                        TabItem(title: AppLocalizations.of(context)!.cancelled),
                       ],
                       onTap: (value) {},
                     ),

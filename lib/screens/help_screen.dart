@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HelpScreen extends StatelessWidget {
   const HelpScreen({super.key});
@@ -18,7 +19,7 @@ class HelpScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(
-            "Help & Support",
+            AppLocalizations.of(context)!.helpAndSupport,
             style: getFontStyle(context),
           ),
           centerTitle: true,
@@ -27,30 +28,28 @@ class HelpScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Text(
-                "How can we help you ?",
+                AppLocalizations.of(context)!.howCanWeHelpYou,
                 style: getFontStyle(context).copyWith(fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               PrimaryButton(
-                text: "Fill a message",
+                text: AppLocalizations.of(context)!.fillAMessage,
                 onPressed: () {
                   context.pushNamed(RouteNames.helpForm);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               PrimaryButton(
-                text: "Cantact an agent",
-                onPressed: () {
-                  
-                },
+                text: AppLocalizations.of(context)!.contactAnAgent,
+                onPressed: () {},
               ),
             ],
           ),
@@ -59,13 +58,12 @@ class HelpScreen extends StatelessWidget {
     );
   }
 
-Future<void> _launchCaller(String phone) async {
-  final Uri url = Uri(scheme: 'tel', path: phone);
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    throw 'Could not launch $url';
+  Future<void> _launchCaller(String phone) async {
+    final Uri url = Uri(scheme: 'tel', path: phone);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
-}
-
 }

@@ -11,6 +11,7 @@ class PrimaryButton extends StatelessWidget {
   final bool? isBold;
   final Widget? icon;
   final double? elevation;
+  final bool? enabled;
 
   const PrimaryButton({
     Key? key,
@@ -18,10 +19,10 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.color = primaryColor,
     this.width = double.infinity,
-    this.height = 70,
+    this.height = 60,
     this.isBold = false,
     this.icon,
-    this.textColor = Colors.white, this.elevation,
+    this.textColor = Colors.white, this.elevation, this.enabled=true,
   }) : super(key: key);
 
   @override
@@ -30,11 +31,12 @@ class PrimaryButton extends StatelessWidget {
       width: width,
       height: height,
       child: ElevatedButton(
+        
         style: ElevatedButton.styleFrom(
           elevation: elevation,
           
           foregroundColor: textColor,
-          backgroundColor: color,
+          backgroundColor: enabled == true ? color : Colors.grey,
           padding: EdgeInsets.zero,
           textStyle: getFontStyle(context).copyWith(fontWeight: isBold! ? FontWeight.bold : FontWeight.normal, fontSize: 20),
           shape: RoundedRectangleBorder(

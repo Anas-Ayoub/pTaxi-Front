@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:taxi_app/widgets/top_snackbar.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CityPickScreen extends StatefulWidget {
   const CityPickScreen({super.key});
 
@@ -40,7 +40,7 @@ class _CityPickScreenState extends State<CityPickScreen> {
     return Container(
       decoration: getBackgroundDecoration(),
       child: Scaffold(
-        appBar: AppBar(title: Text("Choose City", style: getFontStyle(context),), centerTitle: true, backgroundColor: Colors.transparent,),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.chooseCity, style: getFontStyle(context),), centerTitle: true, backgroundColor: Colors.transparent,),
         backgroundColor: Colors.white.withOpacity(0),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -49,12 +49,13 @@ class _CityPickScreenState extends State<CityPickScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 15,),
-                Text("Please Choose your city", style: getFontStyle(context).copyWith(fontSize: 18),),
+                
                 Image.asset(
-                  "assets/4.png",
-                  width: getScreenWidth(context) * 0.5,
+                  "assets/LocationOnCity.png",
+                  width: getScreenWidth(context) * 0.45,
                 ),
+                const SizedBox(height: 30,),
+                Text(AppLocalizations.of(context)!.pleaseChooseYourCity, style: getFontStyle(context).copyWith(fontSize: 18),),
                 const SizedBox(
                   height: 25,
                 ),
@@ -68,7 +69,7 @@ class _CityPickScreenState extends State<CityPickScreen> {
                         leadingIcon: const Icon(Icons.search),
                         
                         label: Text(
-                          'City',
+                          AppLocalizations.of(context)!.city,
                           style: getFontStyle(context),
                         ),
                         inputDecorationTheme: InputDecorationTheme(
@@ -105,12 +106,12 @@ class _CityPickScreenState extends State<CityPickScreen> {
                   height: 40,
                 ),
                 PrimaryButton(
-                  text: "Next",
+                  text: AppLocalizations.of(context)!.next,
                   onPressed: () {
                     if (_selectedCity == null) {
                       mySnackBar(
                           context: context,
-                          message: "Please Select a city",
+                          message: AppLocalizations.of(context)!.pleaseSelectACity,
                           snackBarType: SnackBarType.info);
                     } else {
                       print("CITY = ${_selectedCity}");

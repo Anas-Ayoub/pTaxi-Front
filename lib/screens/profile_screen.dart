@@ -5,7 +5,7 @@ import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/widgets/phone_text_field%20copy.dart';
 import 'package:http/http.dart' as http;
 import 'package:taxi_app/widgets/profile_container.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -52,23 +52,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Icon(
                         Icons.star,
-                        color: Colors.yellow,
+                        color: Colors.orange,
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.yellow,
+                        color: Colors.orange,
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.yellow,
+                        color: Colors.orange,
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.yellow,
+                        color: Colors.orange,
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.yellow,
+                        color: Colors.orange,
                       ),
                       Text('(4.7)')
                     ],
@@ -78,39 +78,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 20,
                   ),
                   MyTextField(
-                    hintText: 'First Name',
+                    hintText: AppLocalizations.of(context)!.firstName,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   MyTextField(
-                    hintText: 'Last Name',
+                    hintText: AppLocalizations.of(context)!.lastName,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   MyTextField(
-                    hintText: 'Phone Number',
+                    hintText: AppLocalizations.of(context)!.phoneNumber,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   MyTextField(
-                    hintText: 'Email',
+                    hintText: AppLocalizations.of(context)!.email,
                   ),
-                  TextButton(
-                    onPressed: () async {
-                      final user = FirebaseAuth.instance.currentUser;
-                      if (user != null) {
-                        final idTokenResult = await user.getIdTokenResult(true);
-                        print(idTokenResult.token!);
-                        sendTokenToBackend(idTokenResult.token!);
-                      } else {
-                        return;
-                      }
-                    },
-                    child: Text("Fetch From Backend"),
-                  ),
+                  // TextButton(
+                  //   onPressed: () async {
+                  //     final user = FirebaseAuth.instance.currentUser;
+                  //     if (user != null) {
+                  //       final idTokenResult = await user.getIdTokenResult(true);
+                  //       print(idTokenResult.token!);
+                  //       sendTokenToBackend(idTokenResult.token!);
+                  //     } else {
+                  //       return;
+                  //     }
+                  //   },
+                  //   child: Text("Fetch From Backend"),
+                  // ),
                   resp != null ? Text(resp!) : Text(""),
                 ],
               ),

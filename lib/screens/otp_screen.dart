@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/pinput.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
-
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OtpScreen extends StatefulWidget {
   final String verificationId;
 
@@ -32,7 +32,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: 15,
                   ),
                   Text(
-                    "Verification",
+                    AppLocalizations.of(context)!.verification,
                     textAlign: TextAlign.center,
                     style: getFontStyle(context).copyWith(fontSize: 25),
                   ),
@@ -40,7 +40,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: 30,
                   ),
                   Text(
-                    "Enter the Code 6-digits Code Sent to the Number",
+                    AppLocalizations.of(context)!.enterTheCode6DigitsCodeSentToTheNumber,
                     textAlign: TextAlign.center,
                     style: getFontStyle(context).copyWith(fontSize: 19),
                   ),
@@ -60,16 +60,16 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: 15,
                   ),
                   Text(
-                    "Didn't recieve code ?",
+                    AppLocalizations.of(context)!.didntReceiveCode,
                     textAlign: TextAlign.center,
                     style: getFontStyle(context).copyWith(),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: Text("Resend", style: getFontStyle(context).copyWith(color: primaryColor),),
+                    child: Text(AppLocalizations.of(context)!.resend, style: getFontStyle(context).copyWith(color: primaryColor),),
                   ),
                   PrimaryButton(
-                    text: 'Verify',
+                    text: AppLocalizations.of(context)!.verify,
                     onPressed: () {},
                   )
                 ],

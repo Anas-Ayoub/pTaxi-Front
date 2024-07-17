@@ -103,7 +103,7 @@ class AuthService {
             loadingProvider.hide();
             context.goNamed(
               RouteNames.otp,
-              pathParameters: {'verificationId': verificationId},
+              extra: {'verificationId': verificationId},
             );
           },
           codeAutoRetrievalTimeout: (verificationId) {});

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:here_sdk/animation.dart';
 import 'package:provider/provider.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/providers/map_provider.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/services/here_service.dart';
+import 'package:taxi_app/utils/utils.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:timelines/timelines.dart';
-// import 'package:timeline_tile/timeline_tile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TripOverviewSheetcontent extends StatefulWidget {
   const TripOverviewSheetcontent({super.key});
@@ -20,14 +23,16 @@ class _TripOverviewSheetcontentState extends State<TripOverviewSheetcontent> {
     final mapProvider = Provider.of<MapProvider>(context, listen: true);
     String startLocation = mapProvider.currentLocationName;
     String endtLocation = mapProvider.toLocationName;
-    int nbPassenger = mapProvider.nbPassenger;
+    String distanceInKm = mapProvider.lengthInKilometers;
+    int travelTimeInMinutes = mapProvider.estimatedTravelTimeInMinutes;
+    int trafficDelay = mapProvider.trafficDelay;
 
+    int nbPassenger = mapProvider.nbPassenger;
     return SingleChildScrollView(
       child: Column(
         children: [
           FixedTimeline.tileBuilder(
             theme: TimelineThemeData(
-
               nodeItemOverlap: true,
               color: primaryColor,
               nodePosition: 0,
@@ -37,7 +42,6 @@ class _TripOverviewSheetcontentState extends State<TripOverviewSheetcontent> {
               ),
             ),
             builder: TimelineTileBuilder.connected(
-              
               connectionDirection: ConnectionDirection.before,
               itemCount: 2,
               contentsBuilder: (context, index) {
@@ -70,7 +74,11 @@ class _TripOverviewSheetcontentState extends State<TripOverviewSheetcontent> {
                 if (index == 0) {
                   return DotIndicator(
                     color: Colors.blue,
-                    child: Icon(Icons.circle, color: Colors.white, size: 15,),
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.white,
+                      size: 15,
+                    ),
                   );
                 } else if (index == 1) {
                   return DotIndicator(
@@ -97,26 +105,32 @@ class _TripOverviewSheetcontentState extends State<TripOverviewSheetcontent> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        "MAD 50",
-                        style: getFontStyle(context).copyWith(fontSize: 20),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "(Fixed Price)",
-                        style: getFontStyle(context).copyWith(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
+                      Column(
+                        children: [
+                          Text(
+                            "50 " + AppLocalizations.of(context)!.mad,
+                            style: getFontStyle(context).copyWith(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.fixedPrice,
+                            style: getFontStyle(context).copyWith(
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
               Text(
-                "4.5 KM",
-                style: getFontStyle(context).copyWith(fontSize: 23),
+                "$distanceInKm " + AppLocalizations.of(context)!.km,
+                style: getFontStyle(context)
+                    .copyWith(fontSize: 23, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -153,7 +167,7 @@ class _TripOverviewSheetcontentState extends State<TripOverviewSheetcontent> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("Passenger(s)"),
+                    Text(AppLocalizations.of(context)!.passengerS),
                   ],
                 ),
                 IconButton(
@@ -175,41 +189,65 @@ class _TripOverviewSheetcontentState extends State<TripOverviewSheetcontent> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
 
           Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.info,
-                    color: primaryColor,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Travel Time Arround 15min",
-                    style: getFontStyle(context),
-                  ),
-                ],
-              ),
-            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: primaryColor.withOpacity(0.3),
             ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                // mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.info,
+                    color: primaryColor,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!
+                            .travelTimeAround(travelTimeInMinutes),
+                        style: getFontStyle(context)
+                            .copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      trafficDelay == 0
+                          ? Container()
+                          : Text(
+                              AppLocalizations.of(context)!
+                                  .estimatedTrafficDelay(trafficDelay),
+                              style: getFontStyle(context).copyWith(
+                                color: errorColor,
+                                fontWeight: FontWeight.bold,
+                                // fontStyle: FontStyle.italic
+                              ),
+                            ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           PrimaryButton(
-            text: "Find a Taxi",
-            onPressed: () {},
+            text: AppLocalizations.of(context)!.findATaxi,
+            onPressed: () {
+              showFindingTaxiSheet(context);
+              flyToUserLocation(context);
+              zoomCameraTo(context, 7000);
+              mapProvider.setIsFindingTaxi(true);
+            },
           )
         ],
       ),

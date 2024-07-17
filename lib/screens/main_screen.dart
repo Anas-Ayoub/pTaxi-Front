@@ -1,14 +1,21 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:taxi_app/constant/const.dart';
+import 'package:taxi_app/providers/app_provider.dart';
+import 'package:taxi_app/providers/map_provider.dart';
 import 'package:taxi_app/screens/home_screen.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/services/authentication_service.dart';
-import 'package:taxi_app/widgets/drawer_button.dart';
+import 'package:taxi_app/utils/utils.dart';
+import 'package:taxi_app/widgets/buttons/drawer_button.dart';
 import 'package:taxi_app/widgets/profile_container.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+final cardSoundPlayer = AudioPlayer();
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,6 +26,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
+
+  
+  Future<void> _loadAudio() async {
+    await cardSoundPlayer.setSource(AssetSource('sounds/pop3.mp3'));
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   late TabController _tabController;
@@ -28,6 +41,7 @@ class _MainScreenState extends State<MainScreen>
   @override
   void initState() {
     super.initState();
+    _loadAudio();
     if (user != null) {
       print("=== TOKEN ===");
       user!.getIdToken(true).then(
@@ -47,11 +61,13 @@ class _MainScreenState extends State<MainScreen>
   @override
   void dispose() {
     _tabController.dispose();
+    cardSoundPlayer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    MapProvider _mapProvider = Provider.of<MapProvider>(context, listen: true);
     User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       key: _scaffoldKey,
@@ -80,28 +96,28 @@ class _MainScreenState extends State<MainScreen>
                 ),
                 DrawerIconButton(
                   iconPath: "assets/user.png",
-                  text: "Profile",
+                  text: AppLocalizations.of(context)!.profile,
                   onPressed: () => context.pushNamed(RouteNames.profile),
                 ),
                 DrawerIconButton(
                   iconPath: "assets/history.png",
-                  text: "History",
+                  text: AppLocalizations.of(context)!.history,
                   onPressed: () => context.pushNamed(RouteNames.history),
                 ),
                 DrawerIconButton(
                   iconPath: "assets/setting.png",
-                  text: "Settings",
+                  text: AppLocalizations.of(context)!.settings,
                   onPressed: () => context.pushNamed(RouteNames.settings),
                 ),
                 DrawerIconButton(
                   iconPath: "assets/question.png",
-                  text: "Help & Support",
+                  text: AppLocalizations.of(context)!.helpAndSupport,
                   onPressed: () => context.pushNamed(RouteNames.helpScreen),
                 ),
                 const Spacer(),
                 DrawerIconButton(
                   iconPath: "assets/exit.png",
-                  text: "Log Out",
+                  text: AppLocalizations.of(context)!.logOut,
                   onPressed: () => AuthService().signOutGoogle(),
                 ),
               ],
@@ -110,26 +126,38 @@ class _MainScreenState extends State<MainScreen>
         ),
       ),
       body: const HomeScreen(),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: SizedBox(
+      floatingActionButton: Visibility(
+        visible: !_mapProvider.isPickingLocation,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: SizedBox(
-            width: 40,
-            height: 40,
-            child: FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), // Set the border radius
-              ),
-              backgroundColor: primaryColor,
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              child: const Icon(
-                Icons.menu,
-                color: Colors.white,
-                size: 25,
-              ),
-            ),
+            child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Consumer<MapProvider>(
+                  builder: (context, value, child) {
+                    return Visibility(
+                      visible: !value.isFindingTaxi,
+                      child: FloatingActionButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              10), // Set the border radius
+                        ),
+                        backgroundColor: primaryColor,
+                        onPressed: () {
+                          // showDriverComingSheet(context);
+                          // showPickingLocationSheet(context);
+                          _scaffoldKey.currentState?.openDrawer();
+                        },
+                        child: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                      ),
+                    );
+                  },
+                )),
           ),
         ),
       ),

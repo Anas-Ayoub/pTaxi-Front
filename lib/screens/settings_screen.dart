@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/settings_button.dart';
-
+import 'package:taxi_app/widgets/buttons/settings_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(
-            "Settings",
+            AppLocalizations.of(context)!.settings,
             style: getFontStyle(context),
           ),
           centerTitle: true,
@@ -28,22 +28,22 @@ class SettingsScreen extends StatelessWidget {
             children: [
               SettingsButton(
                 onTap: () => context.pushNamed(RouteNames.changeLanguage),
-                title: "Change Language",
+                title: AppLocalizations.of(context)!.changeLanguage,
                 trailingIcon: Icons.keyboard_arrow_right,
               ),
               SettingsButton(
                 onTap: () => context.pushNamed(RouteNames.termsCondition),
-                title: "Terms & Condition",
+                title: AppLocalizations.of(context)!.termsAndConditions,
                 trailingIcon: Icons.keyboard_arrow_right,
               ),
               SettingsButton(
                 onTap: () => context.pushNamed(RouteNames.privacyPolicy),
-                title: "Privacy & Policy",
+                title: AppLocalizations.of(context)!.privacyPolicy,
                 trailingIcon: Icons.keyboard_arrow_right,
               ),
               SettingsButton(
                 onTap: () => context.pushNamed(RouteNames.aboutUs),
-                title: "About us",
+                title: AppLocalizations.of(context)!.aboutUs,
                 trailingIcon: Icons.keyboard_arrow_right,
               ),
             ],

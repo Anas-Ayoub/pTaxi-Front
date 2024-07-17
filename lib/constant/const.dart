@@ -15,7 +15,7 @@ TextStyle pinputFont = GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize
 // String backgroundImage = "assets/StarBackground.png";
 
 //APP FONTS
-TextStyle kFontStyle = GoogleFonts.ubuntu(color: Colors.black);
+TextStyle _kFontStyle = GoogleFonts.ubuntu(color: Colors.black);
 TextStyle kArabicFontStyle = GoogleFonts.cairo(color: Colors.black);
 TextStyle getFontStyle(BuildContext context) {
   Locale currentLocale = Localizations.localeOf(context);
@@ -23,6 +23,6 @@ TextStyle getFontStyle(BuildContext context) {
   if (currentLocale.languageCode == 'ar') {
     return kArabicFontStyle;
   } else {
-    return kFontStyle;
+    return _kFontStyle;
   }
 }

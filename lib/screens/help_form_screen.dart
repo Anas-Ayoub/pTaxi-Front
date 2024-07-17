@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:taxi_app/widgets/primary_textfield.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HelpFormSceen extends StatefulWidget {
   const HelpFormSceen({super.key});
 
@@ -37,7 +37,7 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(
-            "Help & Support",
+            AppLocalizations.of(context)!.helpAndSupport,
             style: getFontStyle(context),
           ),
           centerTitle: true,
@@ -50,7 +50,7 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
               child: Column(
                 children: [
                   Text(
-                    "How can we help you ?",
+                    AppLocalizations.of(context)!.howCanWeHelpYou,
                     style: getFontStyle(context).copyWith(fontSize: 20),
                   ),
                   SizedBox(
@@ -61,7 +61,7 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
                       Expanded(
                         child: PrimaryTextfield(
                           controller: _firstNameController,
-                          hintText: "First Name",
+                          hintText: AppLocalizations.of(context)!.firstName,
                         ),
                       ),
                       SizedBox(
@@ -70,7 +70,7 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
                       Expanded(
                           child: PrimaryTextfield(
                         controller: _lastNameController,
-                        hintText: "Last Name",
+                        hintText: AppLocalizations.of(context)!.lastName,
                       )),
                     ],
                   ),
@@ -79,10 +79,10 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
                   ),
                   PrimaryTextfield(
                     controller: _phoneController,
-                    hintText: "Phone Number",
+                    hintText: AppLocalizations.of(context)!.phoneNumber,
                     validator: (txt) {
                       if (txt!.length < 9) {
-                        return 'Must contain 9 digits';
+                        return AppLocalizations.of(context)!.mustContain9Digits;
                       } else {
                         return null;
                       }
@@ -93,11 +93,11 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
                   ),
                   PrimaryTextfield(
                     controller: _msgController,
-                    hintText: "What is the issue you are facing...",
+                    hintText: AppLocalizations.of(context)!.whatIsTheIssueYouAreFacing,
                     isMultiLine: true,
                     validator: (txt) {
                       if (txt!.trim().length < 10) {
-                        return 'Must contain at least 10 character';
+                        return AppLocalizations.of(context)!.mustContainAtLeast10Character;
                       } else {
                         return null;
                       }
@@ -107,7 +107,7 @@ class _HelpFormSceenState extends State<HelpFormSceen> {
                     height: 25,
                   ),
                   PrimaryButton(
-                    text: "Send",
+                    text: AppLocalizations.of(context)!.send,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {}
                     },

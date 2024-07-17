@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:taxi_app/Router/here_map_test.dart';
 import 'package:taxi_app/Router/router_transition.dart';
 import 'package:taxi_app/main.dart';
 import 'package:taxi_app/providers/app_provider.dart';
@@ -23,6 +24,8 @@ import 'package:taxi_app/screens/profile_screen.dart';
 import 'package:taxi_app/screens/settings_screen.dart';
 import 'package:taxi_app/screens/splash_screen.dart';
 import 'package:taxi_app/screens/terms_condition.dart';
+import 'package:taxi_app/ride_request_card.dart';
+import 'package:taxi_app/widgets/test.dart';
 
 final GoRouter _router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
@@ -92,12 +95,11 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      path: "${RouteNames.otp}/:verificationId",
+      path: RouteNames.otp,
       name: RouteNames.otp,
       builder: (BuildContext context, GoRouterState state) {
-        final verificationId = state.pathParameters['verificationId'];
-        // Handle potential null verificationId
-        return OtpScreen(verificationId: verificationId!);
+        final args = state.extra as Map<String, dynamic>;
+        return OtpScreen(verificationId: args['verificationId']);
       },
     ),
     GoRoute(

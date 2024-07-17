@@ -1,7 +1,10 @@
+import 'dart:collection';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:go_router/go_router.dart';
+import 'package:here_sdk/core.engine.dart';
+import 'package:here_sdk/core.errors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_app/Router/go_router.dart';
@@ -9,22 +12,11 @@ import 'package:taxi_app/providers/language_provider.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/providers/map_provider.dart';
 import 'package:taxi_app/providers/progress_dialog_provider.dart';
-import 'package:taxi_app/Router/route_names.dart';
-import 'package:taxi_app/screens/authentication_screen.dart';
-import 'package:taxi_app/screens/car_pick_screen.dart';
-import 'package:taxi_app/screens/help_form_screen.dart';
-import 'package:taxi_app/screens/help_screen.dart';
-import 'package:taxi_app/screens/history_screen.dart';
-import 'package:taxi_app/screens/intro_language_screen.dart';
-import 'package:taxi_app/screens/main_screen.dart';
-import 'package:taxi_app/screens/passenger_additional_information.dart';
-import 'package:taxi_app/screens/profile_screen.dart';
-import 'package:taxi_app/screens/settings_screen.dart';
-import 'package:taxi_app/screens/splash_screen.dart';
-import 'package:taxi_app/screens/otp_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:here_sdk/core.dart';
+import 'package:here_sdk/mapview.dart';
 
 late SharedPreferences prefs;
 final FlutterLocalization localization = FlutterLocalization.instance;
@@ -63,7 +55,6 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() => _MyAppState();
-
   static void setLocale(BuildContext context, Locale newLocale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state?.setLocale(newLocale);
@@ -79,6 +70,41 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _initializeHERESDK() async {
+    // Needs to be called before accessing SDKOptions to load necessary libraries.
+    SdkContext.init(IsolateOrigin.main);
+
+    // Set your credentials for the HERE SDK.
+    String accessKeyId = "9PRuNYmpSqWv3tc29Ux3LA";
+    String accessKeySecret =
+        "N-DF8dRVx1XnOzHuTREe80qkfcvaONm4uiJ-FM9eg57jFylZouGqDwYNY04A05Ytf23C0246QrFGsA7XBTJ7UQ";
+    SDKOptions sdkOptions =
+        SDKOptions.withAccessKeySecret(accessKeyId, accessKeySecret);
+    
+
+    try {
+      await SDKNativeEngine.makeSharedInstance(sdkOptions);
+    } on InstantiationException {
+      throw Exception("Failed to initialize the HERE SDK.");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeHERESDK();
+  }
+
+@override
+  void dispose() {
+    _disposeHERESDK();
+    super.dispose();
+  }
+  void _disposeHERESDK() async {
+  // Free HERE SDK resources before the application shuts down.
+  await SDKNativeEngine.sharedInstance?.dispose();
+  SdkContext.release();
+}
   // getLang() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   _locale = Locale(prefs.getString('selectedLanguage') ?? 'ar');

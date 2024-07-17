@@ -8,13 +8,14 @@ import 'package:taxi_app/models/sign_in_result.dart';
 import 'package:taxi_app/providers/progress_dialog_provider.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/widgets/phone_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:taxi_app/widgets/top_snackbar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum SnackBarType { success, failure, info }
 
@@ -60,14 +61,14 @@ class _AuthScreenState extends State<AuthScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // SizedBox(height: MediaQuery.of(context).size.height/7,),
-                    Text("Join us via phone number",
+                    Text(AppLocalizations.of(context)!.authMessage,
                         textAlign: TextAlign.center,
-                        style: kFontStyle.copyWith(
+                        style: getFontStyle(context).copyWith(
                             fontSize: 25, fontWeight: FontWeight.bold)),
                     Text(
-                      "We'll send a code to verify your number",
+                      AppLocalizations.of(context)!.wellSendACodeToVerifyYourNumber,
                       textAlign: TextAlign.center,
-                      style: kFontStyle.copyWith(fontSize: 15),
+                      style: getFontStyle(context).copyWith(fontSize: 15),
                     ),
                     const SizedBox(
                       height: 50,
@@ -76,7 +77,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       controller: _phoneController,
                       validator: (txt) {
                         if (txt!.length < 9) {
-                          return 'Must conatin 9 digits';
+                          return AppLocalizations.of(context)!.mustContain9Digits;
                         } else {
                           return null;
                         }
@@ -87,7 +88,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       height: 40,
                     ),
                     PrimaryButton(
-                      text: "Next",
+                      text: AppLocalizations.of(context)!.next,
                       textColor: Colors.white,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -101,7 +102,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                           loadingProvider.show(
                             context,
-                            msg: "Signing in with Phone Number...",
+                            msg: AppLocalizations.of(context)!.signInWithPhoneNumber,
                           );
 
                           await AuthService()
@@ -113,12 +114,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       height: 25,
                     ),
                     Text(
-                      "Or login with",
+                      AppLocalizations.of(context)!.orLoginWith,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.aBeeZee(
-                        fontSize: 12,
-                        color: const Color.fromARGB(144, 255, 255, 255),
-                      ),
+                      style: getFontStyle(context),
                     ),
                     const SizedBox(
                       height: 20,
@@ -126,7 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     Visibility(
                       visible: true,
                       child: PrimaryButton(
-                        text: "Continue With Google",
+                        text: AppLocalizations.of(context)!.continueWithGoogle,
                         color: Color.fromARGB(255, 63, 63, 63),
                         icon: Image.asset(
                           "assets/google.png",
@@ -138,7 +136,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               listen: false);
                           loadingProvider.show(
                             context,
-                            msg: "Signing in with Google...",
+                            msg: AppLocalizations.of(context)!.signingInWithGoogle,
                           );
 
                           SignInResult? res =
@@ -146,7 +144,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           if (res != null) {
                             mySnackBar(
                                 context: context,
-                                message: "Successfully Signed In");
+                                message: AppLocalizations.of(context)!.successfullySignedIn);
                             loadingProvider.hide();
                             // await Future.delayed(
                             //   const Duration(milliseconds: 1200),
@@ -173,8 +171,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                   const Duration(milliseconds: 500),
                               animationDuration:
                                   const Duration(milliseconds: 500),
-                              const CustomSnackBar.error(
-                                message: "Authentication not procceded",
+                              CustomSnackBar.error(
+                                message: AppLocalizations.of(context)!.authenticationFailed,
                               ),
                             );
                             loadingProvider.hide();
@@ -188,21 +186,21 @@ class _AuthScreenState extends State<AuthScreen> {
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: kFontStyle.copyWith(fontSize: 12),
+                        style: getFontStyle(context).copyWith(fontSize: 12),
                         children: [
-                          const TextSpan(
-                              text:
-                                  "Joining our app means you agree with our "),
                           TextSpan(
-                            text: "Terms of Use",
+                              text:
+                                  AppLocalizations.of(context)!.termsMessage),
+                          TextSpan(
+                            text: AppLocalizations.of(context)!.termsOfUse,
                             style: const TextStyle(
                                 decoration: TextDecoration.underline),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () => {},
                           ),
-                          const TextSpan(text: " and "),
+                           TextSpan(text: AppLocalizations.of(context)!.and),
                           TextSpan(
-                            text: "Privacy Policy",
+                            text: AppLocalizations.of(context)!.privacyPolicy,
                             style: const TextStyle(
                                 decoration: TextDecoration.underline),
                             recognizer: TapGestureRecognizer()
@@ -235,7 +233,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                         ),
                         TextSpan(
-                          text: "Help",
+                          text: AppLocalizations.of(context)!.help,
                           style: getFontStyle(context).copyWith(
                               fontSize: 17,
                               color: Color.fromARGB(255, 0, 135, 153),

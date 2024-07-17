@@ -9,7 +9,7 @@ import 'package:taxi_app/main.dart';
 import 'package:taxi_app/providers/app_provider.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 

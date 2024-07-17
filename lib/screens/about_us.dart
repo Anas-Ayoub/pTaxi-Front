@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/utils/utils.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AboutUs extends StatelessWidget {
   const AboutUs({super.key});
 

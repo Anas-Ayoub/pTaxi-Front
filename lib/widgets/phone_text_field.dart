@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/constant/const.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PhoneTextField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
-  final String? hintText;
   const PhoneTextField({
     super.key,
     this.keyboardType = TextInputType.number,
-    this.hintText = "Phone Number",
     this.validator,
     required this.controller,
   });
@@ -38,7 +36,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
     return TextFormField(
       controller: widget.controller,
       validator: widget.validator,
-      style: kFontStyle.copyWith(fontSize: 19),
+      style: getFontStyle(context).copyWith(fontSize: 19),
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         
@@ -61,10 +59,10 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
             ),
             borderRadius: BorderRadius.circular(10)),
         hintStyle:
-            kFontStyle.copyWith(fontSize: 15),
+            getFontStyle(context).copyWith(fontSize: 15),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-        hintText: widget.hintText,
+        hintText: AppLocalizations.of(context)!.phoneNumber,
         prefixIcon: Container(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 3),
           constraints: const BoxConstraints(
@@ -84,7 +82,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                 ),
                 Text(
                   "+212",
-                  style:kFontStyle.copyWith(fontSize: 16.5),
+                  style:getFontStyle(context).copyWith(fontSize: 16.5),
                 ),
                 const VerticalDivider(
                   thickness: 1.5,

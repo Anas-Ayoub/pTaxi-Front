@@ -9,7 +9,7 @@ import 'package:taxi_app/providers/language_provider.dart';
 import 'package:taxi_app/Router/route_names.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/language_dropdownmenu.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IntroLanguage extends StatefulWidget {
@@ -20,6 +20,7 @@ class IntroLanguage extends StatefulWidget {
 }
 
 class _IntroLanguageState extends State<IntroLanguage> {
+    final  prefs = SharedPreferences.getInstance();
     Future<void> showSP() async {
     final prefs = await SharedPreferences.getInstance();
     final allKeys = prefs.getKeys();

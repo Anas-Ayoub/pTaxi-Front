@@ -6,7 +6,8 @@ import 'package:taxi_app/utils/utils.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CarPickScreen extends StatefulWidget {
   const CarPickScreen({super.key});
@@ -59,7 +60,7 @@ class _CarPickScreenState extends State<CarPickScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Brand & Model', style: getFontStyle(context)),
+          title: Text(AppLocalizations.of(context)!.brandAndModel, style: getFontStyle(context)),
           backgroundColor: Colors.transparent,
         ),
         body: _isLoading
@@ -112,7 +113,7 @@ class _CarPickScreenState extends State<CarPickScreen> {
                             focusNode: focusNode,
                             style: getFontStyle(context).copyWith(fontWeight: FontWeight.bold),
                             decoration: InputDecoration(
-                                labelText: 'Select Car',
+                                labelText: AppLocalizations.of(context)!.selectCar,
                                 labelStyle: getFontStyle(context),
                                 border: OutlineInputBorder(),
                                 focusedBorder: OutlineInputBorder(
@@ -157,7 +158,7 @@ class _CarPickScreenState extends State<CarPickScreen> {
                                 focusNode: focusNode,
                                 style: getFontStyle(context).copyWith(fontWeight: FontWeight.bold),
                                 decoration: InputDecoration(
-                                    labelText: 'Select Model',
+                                    labelText: AppLocalizations.of(context)!.selectModel,
                                     labelStyle: getFontStyle(context),
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
@@ -174,7 +175,7 @@ class _CarPickScreenState extends State<CarPickScreen> {
                         height: 30,
                       ),
                       PrimaryButton(
-                        text: "Next",
+                        text: AppLocalizations.of(context)!.next,
                         onPressed: () {
                           log(_brandController.text);
                           log(_modelController.text);

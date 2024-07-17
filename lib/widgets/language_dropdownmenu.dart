@@ -9,7 +9,7 @@ import 'package:taxi_app/providers/language_provider.dart';
 // import 'package:taxi_app/enums/language_enum.dart';
 import 'package:taxi_app/models/language.dart';
 import 'package:taxi_app/utils/utils.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LanguageDropDownMenu extends StatefulWidget {
   const LanguageDropDownMenu({super.key});
 
@@ -33,8 +33,8 @@ class _LanguageDropDownMenuState extends State<LanguageDropDownMenu> {
               style: BorderStyle.solid, color: primaryColor, width: 2),
         ),
       ),
-      hintText: 'Languages',
-      textStyle: kFontStyle,
+      hintText: AppLocalizations.of(context)!.languages,
+      textStyle: getFontStyle(context),
       width: getScreenWidth(context) * 0.8,
       onSelected: (value) {
         setState(() {
@@ -52,7 +52,7 @@ class _LanguageDropDownMenuState extends State<LanguageDropDownMenu> {
               value.name,
               style: value.languageCode == 'ar'
                   ? GoogleFonts.cairo(fontSize: 18, fontWeight: FontWeight.w600)
-                  : kFontStyle.copyWith(fontSize: 18, letterSpacing: 1),
+                  : getFontStyle(context).copyWith(fontSize: 18, letterSpacing: 1),
             ),
             value: value.languageCode,
             label: value.name,

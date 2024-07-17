@@ -10,9 +10,10 @@ import 'package:taxi_app/services/authentication_service.dart';
 import 'package:taxi_app/services/mapbox_service.dart';
 import 'package:taxi_app/utils/utils.dart';
 import 'package:taxi_app/widgets/phone_text_field.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:taxi_app/widgets/primary_textfield.dart';
 import 'package:taxi_app/widgets/test.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DraggableBottomSheet extends StatefulWidget {
   // final double maxHeight;
@@ -114,18 +115,18 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                         contentPadding: EdgeInsets.symmetric(horizontal: 5),
                         leading: InkWell(
                           onTap: () {
-                            MapboxMapController? con =
-                                mapProvider.mapboxMapController;
-                            LatLng? currentPos = mapProvider.currentLocation;
-                            if (con != null && currentPos != null) {
-                              double currentZoom = con.cameraPosition!.zoom;
-                              CameraPosition newCameraPosition = CameraPosition(
-                                target: currentPos,
-                                zoom: currentZoom + 1,
-                              );
-                              con.animateCamera(CameraUpdate.newCameraPosition(
-                                  newCameraPosition));
-                            }
+                            // MapboxMapController? con =
+                            //     mapProvider.mapboxMapController;
+                            // LatLng? currentPos = mapProvider.currentLocation;
+                            // if (con != null && currentPos != null) {
+                            //   double currentZoom = con.cameraPosition!.zoom;
+                            //   CameraPosition newCameraPosition = CameraPosition(
+                            //     target: currentPos,
+                            //     zoom: currentZoom + 1,
+                            //   );
+                            //   con.animateCamera(CameraUpdate.newCameraPosition(
+                            //       newCameraPosition));
+                            // }
                           },
                           child: Icon(
                             Icons.gps_fixed,
@@ -134,7 +135,7 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                           ),
                         ),
                         title: Text(
-                          "This your automated location",
+                          AppLocalizations.of(context)!.thisYourAutomatedLocation,
                           style: getFontStyle(context)
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
@@ -154,7 +155,7 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                             onPressed: () {
                               appProvider.hideSheet();
                               _canDrag = false;
-                              mapProvider.setPickingLocation(true);
+                              mapProvider.setIsPickingLocation(true);
                             },
                             icon: Icon(
                               Icons.location_on,
@@ -224,95 +225,95 @@ class _DraggableBottomSheetState extends State<DraggableBottomSheet> {
                         height: 20,
                       ),
                       PrimaryButton(
-                        text: "Find Driver",
+                        text: AppLocalizations.of(context)!.findDriver,
                         onPressed: () {
-                          LatLng? source =
-                              context.read<MapProvider>().currentLocation;
-                          LatLng? destination =
-                              context.read<MapProvider>().toLocationLatLng;
+                        //   LatLng? source =
+                        //       context.read<MapProvider>().currentLocation;
+                        //   LatLng? destination =
+                        //       context.read<MapProvider>().toLocationLatLng;
 
-                          if (source != null && destination != null) {
-                            getOptimizedRoute(source, destination).then(
-                              (response) async {
-                                Map<String, dynamic> geo =
-                                    response['trips'][0]['geometry'];
+                        //   if (source != null && destination != null) {
+                        //     getOptimizedRoute(source, destination).then(
+                        //       (response) async {
+                        //         Map<String, dynamic> geo =
+                        //             response['trips'][0]['geometry'];
 
-                                Object _fills = {
-                                  "type": "FeatureCollection",
-                                  "features": [
-                                    {
-                                      "type": "Feature",
-                                      "id": 0,
-                                      "properties": <String, dynamic>{},
-                                      "geometry": geo,
-                                    },
-                                  ],
-                                };
+                        //         Object _fills = {
+                        //           "type": "FeatureCollection",
+                        //           "features": [
+                        //             {
+                        //               "type": "Feature",
+                        //               "id": 0,
+                        //               "properties": <String, dynamic>{},
+                        //               "geometry": geo,
+                        //             },
+                        //           ],
+                        //         };
 
-                                await mapProvider.mapboxMapController!
-                                    .removeLayer("lines");
-                                await mapProvider.mapboxMapController!
-                                    .removeSource("fills");
+                        //         await mapProvider.mapboxMapController!
+                        //             .removeLayer("lines");
+                        //         await mapProvider.mapboxMapController!
+                        //             .removeSource("fills");
 
-                                await mapProvider.mapboxMapController!
-                                    .addSource("fills",
-                                        GeojsonSourceProperties(data: _fills));
-                                await mapProvider.mapboxMapController!
-                                    .addLineLayer(
-                                  "fills",
-                                  "lines",
-                                  const LineLayerProperties(
-                                    lineColor: '#007AFF',
-                                    lineCap: "round",
-                                    lineJoin: "round",
-                                    lineWidth: 4,
-                                  ),
-                                );
-                                LatLngBounds bounds = LatLngBounds(
-                                  southwest: LatLng(
-                                    source.latitude < destination.latitude
-                                        ? source.latitude
-                                        : destination.latitude,
-                                    source.longitude < destination.longitude
-                                        ? source.longitude
-                                        : destination.longitude,
-                                  ),
-                                  northeast: LatLng(
-                                    source.latitude > destination.latitude
-                                        ? source.latitude
-                                        : destination.latitude,
-                                    source.longitude > destination.longitude
-                                        ? source.longitude
-                                        : destination.longitude,
-                                  ),
-                                );
-                                CameraUpdate cameraUpdate =
-                                    CameraUpdate.newLatLngBounds(bounds,
-                                        top: 100,
-                                        bottom: getScreenHeight(context) * 0.5,
-                                        right: 100,
-                                        left: 100);
-                                log("sdfafsfd");
-                                await mapProvider.mapboxMapController!
-                                    .animateCamera(cameraUpdate)
-                                    .then(
-                                  (value) {
-                                    log("Animated");
-                                    mapProvider.mapboxMapController!
-                                        .getVisibleRegion()
-                                        .then(
-                                      (value) {
-                                        mapProvider.mapboxMapController!
-                                            .animateCamera(
-                                                CameraUpdate.newLatLngBounds(
-                                                    value));
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          }
+                        //         await mapProvider.mapboxMapController!
+                        //             .addSource("fills",
+                        //                 GeojsonSourceProperties(data: _fills));
+                        //         await mapProvider.mapboxMapController!
+                        //             .addLineLayer(
+                        //           "fills",
+                        //           "lines",
+                        //           const LineLayerProperties(
+                        //             lineColor: '#007AFF',
+                        //             lineCap: "round",
+                        //             lineJoin: "round",
+                        //             lineWidth: 4,
+                        //           ),
+                        //         );
+                        //         LatLngBounds bounds = LatLngBounds(
+                        //           southwest: LatLng(
+                        //             source.latitude < destination.latitude
+                        //                 ? source.latitude
+                        //                 : destination.latitude,
+                        //             source.longitude < destination.longitude
+                        //                 ? source.longitude
+                        //                 : destination.longitude,
+                        //           ),
+                        //           northeast: LatLng(
+                        //             source.latitude > destination.latitude
+                        //                 ? source.latitude
+                        //                 : destination.latitude,
+                        //             source.longitude > destination.longitude
+                        //                 ? source.longitude
+                        //                 : destination.longitude,
+                        //           ),
+                        //         );
+                        //         CameraUpdate cameraUpdate =
+                        //             CameraUpdate.newLatLngBounds(bounds,
+                        //                 top: 100,
+                        //                 bottom: getScreenHeight(context) * 0.5,
+                        //                 right: 100,
+                        //                 left: 100);
+                        //         log("sdfafsfd");
+                        //         await mapProvider.mapboxMapController!
+                        //             .animateCamera(cameraUpdate)
+                        //             .then(
+                        //           (value) {
+                        //             log("Animated");
+                        //             mapProvider.mapboxMapController!
+                        //                 .getVisibleRegion()
+                        //                 .then(
+                        //               (value) {
+                        //                 mapProvider.mapboxMapController!
+                        //                     .animateCamera(
+                        //                         CameraUpdate.newLatLngBounds(
+                        //                             value));
+                        //               },
+                        //             );
+                        //           },
+                        //         );
+                        //       },
+                        //     );
+                        //   }
                         },
                       ),
                     ],

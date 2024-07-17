@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/utils/utils.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TermsCondition extends StatelessWidget {
   const TermsCondition({super.key});
 
@@ -14,7 +14,7 @@ class TermsCondition extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(
-            "Terms & Conditions",
+            AppLocalizations.of(context)!.termsAndConditions,
             style: getFontStyle(context),
           ),
           centerTitle: true,

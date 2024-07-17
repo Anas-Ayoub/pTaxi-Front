@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,6 @@ class _RideRequestsPageState extends State<RideRequestsPage> {
           .snapshots();
     }
     super.initState();
-
   }
 
   void sendRideRequest(String receiverId) async {
@@ -39,7 +40,7 @@ class _RideRequestsPageState extends State<RideRequestsPage> {
       });
 
       print("strated timer");
-      Future.delayed(const Duration(seconds: 10), () async {
+      Future.delayed(const Duration(seconds: 5), () async {
         final docSnapshot = await requestRef.get();
         if (docSnapshot.exists && docSnapshot.data()?['status'] == 'pending') {
           print("UPDATED!");
@@ -53,7 +54,10 @@ class _RideRequestsPageState extends State<RideRequestsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ride Requests')),
+      appBar: AppBar(
+          title: InkWell(
+              onTap: () => log(currentUser!.uid),
+              child: Text('Ride Requests'))),
       body: Column(
         children: [
           TextField(
@@ -74,32 +78,50 @@ class _RideRequestsPageState extends State<RideRequestsPage> {
                 final requests = snapshot.data!.docs
                     .where((doc) => doc['status'] == 'pending')
                     .toList();
-                return ListView.builder(
-                  itemCount: requests.length,
-                  itemBuilder: (context, index) {
-                    final request = requests[index];
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text('Request from: ${request['senderId']}'),
-                          subtitle: Text('Status: ${request['status']}'),
-                          onTap: () {
-                            // Handle request tap, e.g., accept or reject
-                          },
-                        ),
-                        LinearTimer(
-                          
-                          duration: Duration(seconds: 10),
+                return Column(
+                  children: requests.map(
+                    (e) {
+                      return ListTile(
+                        key: ValueKey(e.id),
+                        title: Text('Request from: ${e['senderId']}'),
+                        subtitle: LinearTimer(
+                          duration: Duration(seconds: 5),
                           forward: false,
                           color: Colors.amber,
                         ),
-                      ],
-                    );
-                  },
+                      );
+                    },
+                  ).toList(),
                 );
+                // return ListView.builder(
+
+                //   itemCount: requests.length,
+                //   itemBuilder: (context, index) {
+                //     final request = requests[index];
+
+                //     Column(
+                //       key: ValueKey(request['senderId']),
+                //       children: [
+                //         ListTile(
+                //           title: Text('Request from: ${request['senderId']}'),
+                //           subtitle: Text('Status: ${request['status']}'),
+                //           onTap: () {
+                //             // Handle request tap, e.g., accept or reject
+                //           },
+                //         ),
+                //         LinearTimer(
+
+                //           duration: Duration(seconds: 5),
+                //           forward: false,
+                //           color: Colors.amber,
+                //         ),
+                //       ],
+                //     );
+                //   },
+                // );
               },
             ),
-          ) 
+          )
         ],
       ),
     );

@@ -8,10 +8,10 @@ import 'package:taxi_app/constant/const.dart';
 import 'package:taxi_app/services/authentication_service.dart';
 // import 'package:taxi_app/models/user.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:taxi_app/widgets/primary_textfield.dart';
 import 'package:taxi_app/widgets/top_snackbar.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PassengerAdditionalInfo extends StatefulWidget {
   const PassengerAdditionalInfo({super.key});
 
@@ -62,7 +62,7 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Text(
-            "Personel Information",
+            AppLocalizations.of(context)!.personnelInformation,
             style: getFontStyle(context),
           ),
           centerTitle: true,
@@ -75,7 +75,7 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
               child: Column(
                 children: [
                   Text(
-                    "Please enter your personal information",
+                    AppLocalizations.of(context)!.pleaseEnterYourPersonnelInformation,
                     style: getFontStyle(context).copyWith(
                         color: Colors.black.withOpacity(1), fontSize: 18),
                   ),
@@ -87,10 +87,10 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                       Expanded(
                         child: PrimaryTextfield(
                           controller: _firstNameController,
-                          hintText: "First Name",
+                          hintText: AppLocalizations.of(context)!.firstName,
                           validator: (txt) {
                             if (txt!.length < 3) {
-                              return 'Name is too short';
+                              return AppLocalizations.of(context)!.nameIsTooShort;
                             } else {
                               return null;
                             }
@@ -103,10 +103,10 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                       Expanded(
                           child: PrimaryTextfield(
                         controller: _lastNameController,
-                        hintText: "Last Name",
+                        hintText: AppLocalizations.of(context)!.lastName,
                         validator: (txt) {
                           if (txt!.length < 3) {
-                            return 'Name is too short';
+                            return AppLocalizations.of(context)!.nameIsTooShort;
                           } else {
                             return null;
                           }
@@ -120,10 +120,10 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                   PrimaryTextfield(
                     keyboardType: TextInputType.number,
                     controller: _phoneController,
-                    hintText: "Phone Number",
+                    hintText: AppLocalizations.of(context)!.phoneNumber,
                     validator: (txt) {
                       if (txt!.length < 9) {
-                        return 'Must contain 9 digits';
+                        return AppLocalizations.of(context)!.mustContain9Digits;
                       } else {
                         return null;
                       }
@@ -135,13 +135,13 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                   PrimaryTextfield(
                     isEnabled: !_hasEmail,
                     controller: _emailController,
-                    hintText: "Email",
+                    hintText: AppLocalizations.of(context)!.email,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter an email';
+                        return AppLocalizations.of(context)!.pleaseEnterAnEmail;
                       }
                       if (!RegExp(emailPattern).hasMatch(value)) {
-                        return 'Invalid email';
+                        return AppLocalizations.of(context)!.invalidEmail;
                       }
                       return null;
                     },
@@ -165,7 +165,7 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                       contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     ),
                     label: Text(
-                      'Gender',
+                      AppLocalizations.of(context)!.gender,
                       style: getFontStyle(context)
                           .copyWith(color: Colors.black.withOpacity(0.75)),
                     ),
@@ -175,15 +175,15 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                         _selectedGender = value!;
                       });
                     },
-                    dropdownMenuEntries: const [
+                    dropdownMenuEntries: [
                       DropdownMenuEntry<String>(
                         value: "male",
-                        label: "Male",
+                        label: AppLocalizations.of(context)!.male,
                         // leadingIcon: Icon(icon.icon),
                       ),
                       DropdownMenuEntry<String>(
                         value: "female",
-                        label: "Female",
+                        label: AppLocalizations.of(context)!.female,
                         // leadingIcon: Icon(icon.icon),
                       )
                     ],
@@ -192,7 +192,7 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                     height: 25,
                   ),
                   PrimaryButton(
-                    text: "Send",
+                    text: AppLocalizations.of(context)!.send,
                     onPressed: () {
                       if (_formKey.currentState!.validate() &&
                           _selectedGender != null) {
@@ -207,7 +207,7 @@ class _PassengerAdditionalInfoState extends State<PassengerAdditionalInfo> {
                           _selectedGender == null) {
                         mySnackBar(
                             context: context,
-                            message: "Please select a Gender",
+                            message: AppLocalizations.of(context)!.pleaseSelectAGender,
                             snackBarType: SnackBarType.info);
                       }
                     },

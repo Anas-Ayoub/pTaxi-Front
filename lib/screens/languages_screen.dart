@@ -8,9 +8,9 @@ import 'package:taxi_app/main.dart';
 import 'package:taxi_app/models/language.dart';
 import 'package:taxi_app/providers/language_provider.dart';
 import 'package:taxi_app/utils/utils.dart';
-import 'package:taxi_app/widgets/language_button.dart';
+import 'package:taxi_app/widgets/buttons/language_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:taxi_app/widgets/primary_button.dart';
+import 'package:taxi_app/widgets/buttons/primary_button.dart';
 import 'package:taxi_app/widgets/top_snackbar.dart';
 
 class LanguageScreen extends StatefulWidget {
