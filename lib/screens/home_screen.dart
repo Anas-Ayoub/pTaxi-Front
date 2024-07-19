@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen>
   ];
   bool _isCameraMoving = false;
   Timer? _timer;
+  HereMapOptions opts = HereMapOptions();
 
   @override
   void initState() {
@@ -87,18 +88,22 @@ class _HomeScreenState extends State<HomeScreen>
       });
 
     _controller.forward();
+
+    opts.renderMode = MapRenderMode.texture;
   }
 
   @override
   Widget build(BuildContext context) {
     final _mapProvider = Provider.of<MapProvider>(context, listen: true);
     final _appProvider = Provider.of<AppProvider>(context, listen: true);
+
     _isCameraMoving = _mapProvider.isDraging;
     return Scaffold(
         backgroundColor: Colors.grey,
         body: Stack(
           children: [
             HereMap(
+              options: opts,
               onMapCreated: (mapController) {
                 mapController.camera.addListener(MapCameraListener(
                   (p0) {
